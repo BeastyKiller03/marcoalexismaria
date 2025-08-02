@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Error</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background-color: #0000AA;
+      color: white;
+      font-family: 'Lucida Console', Monaco, monospace;
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .center {
+      margin-top: 50px;
+    }
+
+    .windows {
+      background-color: #C0C0C0;
+      color: black;
+      display: inline-block;
+      padding: 2px 8px;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .blink {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body tabindex="0">
+  <div class="windows">Windows</div>
+
+  <p>
+An error has occurred. To continue:
+
+Press Enter to return to Windows, or
+
+Press CTRL+ALT+DEL to restart your computer. If you do this,
+you will lose any unsaved information in all open applications.
+
+Error: 0E : 016F : BFF9B3D4
+  </p>
+
+  <div class="center">
+    Press any key or tap to continue<span class="blink">_</span>
+  </div>
+
+  <script>
+    function goToStory() {
+      window.location.href = 'story.html';
+    }
+
+    document.addEventListener('keydown', goToStory);
+    document.addEventListener('touchstart', goToStory);
+  </script>
+</body>
+</html>

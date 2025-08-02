@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Videos - PerfectlyCraftedMusic</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 4rem auto;
+      padding: 2rem;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .video-gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .video-gallery a img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .video-gallery a img:hover {
+      transform: scale(1.03);
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 1rem;
+      color: black;
+      text-decoration: none;
+      margin-top: 2rem;
+    }
+
+    .back-link:hover {
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+        margin: 2rem auto;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .video-gallery a img {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Videos</h2>
+    <div class="video-gallery">
+      <a href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank">
+        <img src="img_02.png" alt="Video 1 Thumbnail">
+      </a>
+      <a href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank">
+        <img src="img_01.png" alt="Video 2 Thumbnail">
+      </a>
+    </div>
+    <a class="back-link" href="index.html">&larr; Back</a>
+  </div>
+</body>
+</html>

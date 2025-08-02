@@ -1,0 +1,135 @@
+/* Base reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar layout */
+.header {
+  width: 200px;
+  padding: 40px 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.links a {
+  color: #000;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.links a:hover {
+  opacity: 0.6;
+}
+
+/* Top-right floating title */
+.top-corner-title {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  z-index: 999;
+}
+
+.top-corner-title p {
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: #000;
+  text-transform: lowercase;
+  opacity: 0.9;
+}
+
+/* Gallery layout */
+.main-content {
+  margin-left: 240px;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.gallery-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-row img {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 60px 0;
+  margin-top: auto;
+}
+
+.footer img {
+  max-width: 200px;
+  height: auto;
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .header {
+    position: static;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .gallery-row img {
+    width: 100%;
+  }
+
+  .footer img {
+    max-width: 140px;
+  }
+}
