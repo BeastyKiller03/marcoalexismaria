@@ -10,6 +10,7 @@ body {
   background-color: #fff;
   color: #000;
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -89,6 +90,14 @@ body {
   height: auto;
   object-fit: cover;
   border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  loading: lazy;
+}
+
+.gallery-row img:hover {
+  transform: scale(1.03);
+  opacity: 0.85;
 }
 
 /* Footer */
@@ -103,6 +112,29 @@ body {
   max-width: 200px;
   height: auto;
   opacity: 0.9;
+}
+
+/* Lightbox styles */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox.active {
+  display: flex;
 }
 
 /* Responsive */
