@@ -3,58 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PerfectlyCraftedMusic</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Photos - PerfectlyCraftedMusic</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background-color: #fff;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .gallery img {
+      max-width: 90%;
+      height: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: black;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      opacity: 0.6;
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Floating top-right logo -->
-  <div class="top-corner-title">
-    <p>perfectlycraftedmusic</p>
+  <div class="gallery">
+    <img id="img1" src="IMG_1.jpg" alt="Image 1" loading="lazy">
+    <img id="img2" src="IMG_2.jpg" alt="Image 2" loading="lazy">
+    <img id="img3" src="IMG_3.jpg" alt="Image 3" loading="lazy">
+    <img id="img4" src="IMG_4.jpg" alt="Image 4" loading="lazy">
+    <img id="img5" src="IMG_5.jpg" alt="Image 5" loading="lazy">
+    <img id="img6" src="IMG_6.jpg" alt="Image 6" loading="lazy">
+    <img id="img7" src="IMG_7.jpg" alt="Image 7" loading="lazy">
+    <img id="img8" src="IMG_8.jpg" alt="Image 8" loading="lazy">
+    <img id="img9" src="IMG_9.jpg" alt="Image 9" loading="lazy">
+    <img id="img10" src="IMG_10.jpg" alt="Image 10" loading="lazy">
+    <img id="img11" src="IMG_11.jpg" alt="Image 11" loading="lazy">
+    <img id="img12" src="IMG_12.jpg" alt="Image 12" loading="lazy">
+    <img id="img13" src="IMG_13.jpg" alt="Image 13" loading="lazy">
+    <img id="img14" src="IMG_14.jpg" alt="Image 14" loading="lazy">
+    <img id="img15" src="IMG_15.jpg" alt="Image 15" loading="lazy">
+    <img id="img16" src="IMG_16.jpg" alt="Image 16" loading="lazy">
+   
   </div>
 
-  <!-- Sidebar with links -->
-  <div class="header">
-    <div class="links">
-      <a href="videos.html">Videos</a>
-      <a href="music.html">Music</a>
-      <a href="photos.html" class="background-link">Photographs</a>
-      <a href="https://www.instagram.com/perfectlycraftedmusic/" target="_blank">Instagram</a>
-      <a href="https://tumblr.com/blog/marcoalexismaria" target="_blank">Tumblr</a>
-      <a href="mailto:perfectlycraftedmusic@gmail.com">Email</a>
-      <a href="background.html" class="background-link">Background</a>
-    </div>
-  </div>
-
-  <!-- Image gallery to the right side -->
-<div class="main-content">
-<div class="gallery-row">
-<a href="photos.html"><img src="IMG_1.jpg" alt="Image 1" /></a>
-<a href="photos.html"><img src="IMG_2.jpg" alt="Image 2" /></a>
-<a href="photos.html"><img src="IMG_3.jpg" alt="Image 3" /></a>
-<a href="photos.html"><img src="IMG_4.jpg" alt="Image 4" /></a>
-<a href="photos.html"><img src="IMG_5.jpg" alt="Image 5" /></a>
-<a href="photos.html"><img src="IMG_6.jpg" alt="Image 6" /></a>
-<a href="photos.html"><img src="IMG_7.jpg" alt="Image 7" /></a>
-<a href="photos.html"><img src="IMG_8.jpg" alt="Image 8" /></a>
-<a href="photos.html"><img src="IMG_9.jpg" alt="Image 9" /></a>
-<a href="photos.html"><img src="IMG_10.jpg" alt="Image 10" /></a>
-<a href="photos.html"><img src="IMG_11.jpg" alt="Image 11" /></a>
-<a href="photos.html"><img src="IMG_12.jpg" alt="Image 12" /></a>
-<a href="photos.html"><img src="IMG_13.jpg" alt="Image 13" /></a>
-<a href="photos.html"><img src="IMG_14.jpg" alt="Image 14" /></a>
-<a href="photos.html"><img src="IMG_15.jpg" alt="Image 15" /></a>
-<a href="photos.html"><img src="IMG_16.jpg" alt="Image 16" /></a>
-<a href="photos.html"><img src="IMG_17.jpg" alt="Image 17" /></a>
-</div>
-</div>
-
-  <!-- Footer logo at bottom -->
-<footer class="footer">
-  <a href="secret.html">
-    <img src="PM LOGO copy 4.png" alt="PM Logo" />
-  </a>
-</footer>
-
+  <a class="back-link" href="index.html">&larr; Back to Home</a>
 </body>
 </html>
