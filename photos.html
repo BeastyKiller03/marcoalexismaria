@@ -5,102 +5,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photos - PerfectlyCraftedMusic</title>
   <style>
- * {
-  box-sizing: border-box;
-}
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #fff;
-  width: 100%;
-  overflow-x: hidden;
-}
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #fff;
+      width: 100%;
+      overflow-x: hidden;
+      scroll-behavior: auto;
+    }
 
-:root {
-  scroll-behavior: auto;
-}
+    :target {
+      scroll-margin-top: 120px; /* makes space for fixed headers */
+    }
 
-:target {
-  scroll-margin-top: 100px;
-}
+    /* Floating top title */
+    .top-corner-title {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      z-index: 1000;
+      font-size: 0.8rem;
+      text-transform: lowercase;
+      color: black;
+      opacity: 0.9;
+    }
 
-/* Mobile header */
-.mobile-header {
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 999;
-  padding: 1rem 1rem 0.5rem;
-  border-bottom: 1px solid #ccc;
-  text-align: center;
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
+    /* Sticky navigation links */
+    .header {
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 999;
+      padding: 1rem 0.5rem 0.75rem;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+    }
 
-.mobile-header p {
-  font-size: 0.8rem;
-  text-transform: lowercase;
-  margin-bottom: 0.5rem;
-}
+    .header a {
+      text-decoration: none;
+      color: black;
+      font-size: 0.9rem;
+    }
 
-.mobile-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  padding-bottom: 0.5rem;
-}
+    .header a:hover {
+      opacity: 0.6;
+    }
 
-.mobile-links a {
-  text-decoration: none;
-  font-size: 0.9rem;
-  color: black;
-}
+    /* Gallery */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem;
+      gap: 2rem;
+    }
 
-.mobile-links a:hover {
-  opacity: 0.6;
-}
+    .gallery img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
 
-/* Gallery layout */
-.gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem 1rem;
-  gap: 2rem;
-}
+    @media (max-width: 768px) {
+      .gallery {
+        padding: 1rem 0.5rem;
+        gap: 1.5rem;
+      }
 
-.gallery img {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  display: block;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  border-radius: 4px;
-}
+      .header {
+        padding: 0.8rem 0.3rem;
+        gap: 0.5rem;
+      }
 
-/* Back link */
-.back-link {
-  display: block;
-  text-align: center;
-  margin: 2rem 0;
-  font-size: 1rem;
-  color: black;
-  text-decoration: none;
-}
-
-.back-link:hover {
-  opacity: 0.6;
-}
+      .top-corner-title {
+        top: 8px;
+        right: 10px;
+        font-size: 0.75rem;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Floating title -->
   <div class="top-corner-title">
     <p>perfectlycraftedmusic</p>
   </div>
 
+  <!-- Navigation -->
   <div class="header">
     <a href="index.html">Home</a>
     <a href="videos.html">Videos</a>
@@ -112,35 +116,34 @@ html, body {
     <a href="background.html">Background</a>
   </div>
 
+  <!-- Image gallery -->
   <div class="gallery">
-    <img id="img1" src="IMG_1.jpg" alt="Image 1" loading="lazy">
-    <img id="img2" src="IMG_2.jpg" alt="Image 2" loading="lazy">
-    <img id="img3" src="IMG_3.jpg" alt="Image 3" loading="lazy">
-    <img id="img4" src="IMG_4.jpg" alt="Image 4" loading="lazy">
-    <img id="img5" src="IMG_5.jpg" alt="Image 5" loading="lazy">
-    <img id="img6" src="IMG_6.jpg" alt="Image 6" loading="lazy">
-    <img id="img7" src="IMG_7.jpg" alt="Image 7" loading="lazy">
-    <img id="img8" src="IMG_8.jpg" alt="Image 8" loading="lazy">
-    <img id="img9" src="IMG_9.jpg" alt="Image 9" loading="lazy">
-    <img id="img10" src="IMG_10.jpg" alt="Image 10" loading="lazy">
-    <img id="img11" src="IMG_11.jpg" alt="Image 11" loading="lazy">
-    <img id="img12" src="IMG_12.jpg" alt="Image 12" loading="lazy">
-    <img id="img13" src="IMG_13.jpg" alt="Image 13" loading="lazy">
-    <img id="img14" src="IMG_14.jpg" alt="Image 14" loading="lazy">
-    <img id="img15" src="IMG_15.jpg" alt="Image 15" loading="lazy">
-    <img id="img16" src="IMG_16.jpg" alt="Image 16" loading="lazy">
+    <img id="img1" src="IMG_1.jpg" alt="Image 1" loading="lazy" />
+    <img id="img2" src="IMG_2.jpg" alt="Image 2" loading="lazy" />
+    <img id="img3" src="IMG_3.jpg" alt="Image 3" loading="lazy" />
+    <img id="img4" src="IMG_4.jpg" alt="Image 4" loading="lazy" />
+    <img id="img5" src="IMG_5.jpg" alt="Image 5" loading="lazy" />
+    <img id="img6" src="IMG_6.jpg" alt="Image 6" loading="lazy" />
+    <img id="img7" src="IMG_7.jpg" alt="Image 7" loading="lazy" />
+    <img id="img8" src="IMG_8.jpg" alt="Image 8" loading="lazy" />
+    <img id="img9" src="IMG_9.jpg" alt="Image 9" loading="lazy" />
+    <img id="img10" src="IMG_10.jpg" alt="Image 10" loading="lazy" />
+    <img id="img11" src="IMG_11.jpg" alt="Image 11" loading="lazy" />
+    <img id="img12" src="IMG_12.jpg" alt="Image 12" loading="lazy" />
+    <img id="img13" src="IMG_13.jpg" alt="Image 13" loading="lazy" />
+    <img id="img14" src="IMG_14.jpg" alt="Image 14" loading="lazy" />
+    <img id="img15" src="IMG_15.jpg" alt="Image 15" loading="lazy" />
+    <img id="img16" src="IMG_16.jpg" alt="Image 16" loading="lazy" />
   </div>
 
-
+  <!-- Anchor jump fix -->
   <script>
     window.addEventListener('load', () => {
       const hash = window.location.hash;
       if (hash) {
         const el = document.querySelector(hash);
         if (el) {
-          setTimeout(() => {
-            el.scrollIntoView({ behavior: 'instant', block: 'start' });
-          }, 100);
+          el.scrollIntoView({ behavior: "instant", block: "start" });
         }
       }
     });
