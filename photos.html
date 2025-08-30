@@ -91,8 +91,18 @@
     @media (min-width: 600px) {
       .gallery {
         margin-left: 220px;
-      }
-    }
+
+    @media (max-width: 768px) {
+       body {
+        overflow-x: auto;
+  }
+
+      .gallery {
+        margin-left: 220px; /* same as desktop */
+        min-width: 600px;   /* ensures full image space */
+  }
+}
+
   </style>
 </head>
 <body>
