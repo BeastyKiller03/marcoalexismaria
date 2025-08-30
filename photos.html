@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photos - PerfectlyCraftedMusic</title>
   <style>
-    *, *::before, *::after {
+    * {
       box-sizing: border-box;
     }
 
@@ -16,45 +16,36 @@
       background-color: #fff;
       width: 100%;
       overflow-x: hidden;
+    }
+
+    :root {
       scroll-behavior: auto;
     }
 
     :target {
-      scroll-margin-top: 120px;
+      scroll-margin-top: 100px;
     }
 
-    /* Floating top-right title */
-    .top-corner-title {
-      position: fixed;
-      top: 10px;
-      right: 20px;
-      z-index: 1000;
-      font-size: 0.8rem;
-      text-transform: lowercase;
-      color: black;
-      opacity: 0.9;
-    }
-
-    /* Sidebar (matches index.html) */
+    /* Sidebar Menu (vertical) */
     .header {
-      position: fixed;
-      top: 0;
-      left: 0;
       width: 200px;
-      height: 100vh;
-      background-color: #fff;
       padding: 40px 20px;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 15px;
-      z-index: 999;
-      border-right: 1px solid #ccc;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
     }
 
     .header a {
+      color: #000;
       text-decoration: none;
-      color: black;
       font-size: 1rem;
     }
 
@@ -62,13 +53,28 @@
       opacity: 0.6;
     }
 
-    /* Main gallery content */
+    /* Top-right logo */
+    .top-corner-title {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 1001;
+    }
+
+    .top-corner-title p {
+      font-size: 0.8rem;
+      text-transform: lowercase;
+      color: #000;
+      opacity: 0.9;
+    }
+
+    /* Gallery layout */
     .gallery {
       margin-left: 240px;
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
       gap: 2rem;
     }
 
@@ -77,44 +83,44 @@
       max-width: 800px;
       height: auto;
       display: block;
-      border-radius: 4px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 4px;
     }
 
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .top-corner-title {
-        top: 8px;
-        right: 10px;
-        font-size: 0.75rem;
-      }
-
       .header {
-        position: fixed;
         width: 100%;
         height: auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 20px 10px;
+        flex-direction: column;
+        position: static;
+        padding: 1rem;
+        gap: 10px;
         border-bottom: 1px solid #ccc;
       }
 
       .gallery {
         margin-left: 0;
-        padding: 100px 1rem 2rem;
-        gap: 1.5rem;
+        padding: 1rem;
+      }
+
+      .top-corner-title {
+        top: auto;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      .top-corner-title p {
+        font-size: 0.7rem;
       }
     }
   </style>
 </head>
 <body>
-
-  <!-- Floating title -->
   <div class="top-corner-title">
     <p>perfectlycraftedmusic</p>
   </div>
 
-  <!-- Sidebar / Header Navigation -->
   <div class="header">
     <a href="index.html">Home</a>
     <a href="videos.html">Videos</a>
@@ -126,7 +132,6 @@
     <a href="background.html">Background</a>
   </div>
 
-  <!-- Image Gallery -->
   <div class="gallery">
     <img id="img1" src="IMG_1.jpg" alt="Image 1" loading="lazy">
     <img id="img2" src="IMG_2.jpg" alt="Image 2" loading="lazy">
@@ -146,18 +151,18 @@
     <img id="img16" src="IMG_16.jpg" alt="Image 16" loading="lazy">
   </div>
 
-  <!-- Optional anchor jump fix -->
   <script>
     window.addEventListener('load', () => {
       const hash = window.location.hash;
       if (hash) {
         const el = document.querySelector(hash);
         if (el) {
-          el.scrollIntoView({ behavior: 'instant', block: 'start' });
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'auto', block: 'start' });
+          }, 100);
         }
       }
     });
   </script>
-
 </body>
 </html>
