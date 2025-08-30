@@ -66,7 +66,7 @@ body {
   opacity: 0.9;
 }
 
-/* Gallery layout */
+/* Gallery layout (desktop/tablet) */
 .main-content {
   margin-left: 240px;
   padding: 40px;
@@ -77,7 +77,7 @@ body {
 }
 
 .gallery-row {
-  display: flex;
+  display: flex;                 /* desktop: keep your current wrap layout */
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
@@ -92,7 +92,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  loading: lazy;
+  /* loading is an HTML attribute, not CSS */
 }
 
 .gallery-row img:hover {
@@ -137,12 +137,15 @@ body {
   display: flex;
 }
 
-/* Responsive */
+/* =========================
+   Responsive (mobile grid)
+   ========================= */
 @media (max-width: 768px) {
   body {
     flex-direction: column;
   }
 
+  /* Keep mobile sidebar behavior like before */
   .header {
     position: static;
     width: 100%;
@@ -157,11 +160,76 @@ body {
     padding: 20px;
   }
 
+  /* Switch gallery to a real grid on phones */
+  .gallery-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 2 per row on phones */
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  /* Images fill their grid cells */
   .gallery-row img {
     width: 100%;
+    height: auto;            /* keep aspect ratio */
+    border-radius: 4px;
   }
 
   .footer img {
     max-width: 140px;
   }
 }
+
+/* Video thumbs inside index gallery */
+.video-thumb {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+
+.video-thumb img {
+  display: block;
+  width: 300px;   /* matches your photo size */
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0,0,0,.2);
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+.video-thumb:hover img {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+.play-badge {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,.6);
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+
+.video-thumb:hover .play-badge {
+  opacity: 1;
+}
+
+/* Mobile: thumbnails shrink into the grid like photos */
+@media (max-width: 768px) {
+  .video-thumb img {
+    width: 100%;
+  }
+}
+
+
+/* Optional: 3 columns on bigger phones (uncomment if you want)
+@media (min-width: 600px) and (max-width: 768px) {
+  .gallery-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+*/
