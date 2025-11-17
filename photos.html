@@ -4,57 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photos - Marco Maria</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    html, body {
+  <!-- Global styles (same file used by index) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Page-specific styles (ONLY viewer stuff, no menu overrides) -->
+  <style>
+    /* Make photos page background soft white */
+    body {
+      background: #faf9f6;
+      color: #000;
       margin: 0;
       padding: 0;
       height: 100%;
+      overflow: hidden;          /* no scroll, we use arrows */
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #faf9f6;         /* soft white */
-      color: #000;
-      overflow: hidden;            /* no scroll – we use arrows instead */
     }
 
-    /* ---- TOP BAR (same vibe as index) ---- */
-
-    .top-corner-title {
-      position: fixed;
-      top: 16px;
-      left: 24px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      z-index: 1000;
-    }
-
-    .top-corner-title p {
-      margin: 0;
-    }
-
-    .header {
-      position: fixed;
-      top: 16px;
-      right: 24px;
-      z-index: 1000;
-    }
-
-    .header .links a {
-      font-size: 12px;
-      margin-left: 16px;
+    /* Make the name link look like the index title */
+    .top-corner-title a {
       text-decoration: none;
-      color: #000;
+      color: inherit;
     }
 
-    .header .links a:hover {
-      opacity: 0.6;
-    }
-
-    /* ---- MAIN VIEWER ---- */
-
+    /* MAIN VIEWER */
     .viewer {
       position: relative;
       height: 100vh;
@@ -68,7 +41,7 @@
     }
 
     .viewer img {
-      max-width: calc(100vw - 260px);   /* leave space for nav + arrows */
+      max-width: calc(100vw - 260px);   /* leave space for menu + arrows */
       max-height: 80vh;
       object-fit: contain;
       display: block;
@@ -109,13 +82,17 @@
       display: block;
     }
 
-    /* HIDDEN source images (for JS + deep links) */
+    /* Hidden source images (for JS + deep links) */
     .gallery {
       display: none;
     }
 
-    /* Mobile tweaks */
+    /* --- Mobile tweaks --- */
     @media (max-width: 768px) {
+      body {
+        overflow: hidden;
+      }
+
       .viewer {
         padding: 0 40px;
       }
@@ -125,41 +102,35 @@
         max-height: 70vh;
       }
 
-      .nav-arrow.left {
-        left: 16px;
-      }
-      .nav-arrow.right {
-        right: 16px;
-      }
-
+      /* If your style.css already shrinks menu text, this just keeps it from cramming */
       .header .links a {
-        margin-left: 10px;
         font-size: 11px;
+        margin-left: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- top-left name -->
- <div class="top-corner-title">
-  <a href="index.html">MARCO MARIA</a>
-</div>
+  <!-- Top-left name (clicks back to index) -->
+  <div class="top-corner-title">
+    <a href="index.html">Marco Maria</a>
+  </div>
 
-  <!-- top-right horizontal menu (same as index) -->
+  <!-- Top-right menu – EXACT SAME STRUCTURE AS INDEX -->
   <div class="header">
     <div class="links">
       <a href="videos.html">Videos</a>
       <a href="music.html">Music</a>
       <a href="photos.html">Photographs</a>
       <a href="events.html">Events</a>
-      <a href="https://www.instagram.com/perfectlycraftedmusic/" target="_blank">Instagram</a>
+      <a href="https://www.instagram.com/marcoalexismaria/" target="_blank">Instagram</a>
       <a href="https://tumblr.com/blog/marcoalexismaria" target="_blank">Tumblr</a>
-      <a href="mailto:perfectlycraftedmusic@gmail.com">Email</a>
-      <a href="background.html">Background</a>
+      <a href="mailto:mmarco8874@gmail.com">Email</a>
+      <a href="background.html">About</a>
     </div>
   </div>
 
-  <!-- SINGLE big centered photo with arrows -->
+  <!-- Single big centered photo with arrows -->
   <div class="viewer">
     <button class="nav-arrow left" aria-label="Previous photo">
       <span>&#10094;</span>
@@ -172,7 +143,7 @@
     </button>
   </div>
 
-  <!-- HIDDEN images used as source list + deep-link IDs -->
+  <!-- Hidden images used as source list + deep-link IDs -->
   <div class="gallery">
     <img id="img1"  src="IMG_1.jpg"  alt="Image 1"  loading="lazy">
     <img id="img2"  src="IMG_2.jpg"  alt="Image 2"  loading="lazy">
@@ -247,5 +218,4 @@
   </script>
 </body>
 </html>
-
 
