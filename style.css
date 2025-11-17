@@ -1,235 +1,144 @@
-/* Base reset */
+/* Global reset */
 * {
   box-sizing: border-box;
+}
+
+/* Full-page + background image */
+html,
+body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;               /* no vertical scroll */
 }
 
+/* This is your full-screen background image.
+   To change it monthly, just swap the file or path here. */
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #fff;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  background-image: url("bg_01.jpg"); /* <- put your image file here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;   /* stays still */
+  color: #111;
 }
 
-/* Sidebar layout */
-.header {
-  width: 200px;
-  padding: 40px 20px;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  flex-shrink: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  overflow-y: auto;
-  z-index: 1000;
-}
-
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.links a {
-  color: #000;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: opacity 0.3s ease;
-}
-
-.links a:hover {
-  opacity: 0.6;
-}
-
-/* Top-right floating title */
+/* Top-left name */
 .top-corner-title {
   position: fixed;
-  top: 20px;
-  right: 30px;
-  z-index: 999;
+  top: 16px;
+  left: 24px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 10;
 }
 
-.top-corner-title p {
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
-  color: #000;
-  text-transform: lowercase;
-  opacity: 0.9;
+.top-corner-title a {
+  text-decoration: none;
+  color: #111;
 }
 
-/* Gallery layout (desktop/tablet) */
-.main-content {
-  margin-left: 240px;
-  padding: 40px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-}
-
-.gallery-row {
-  display: flex;                 /* desktop: keep your current wrap layout */
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.gallery-row img {
-  width: 300px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  /* loading is an HTML attribute, not CSS */
-}
-
-.gallery-row img:hover {
-  transform: scale(1.03);
-  opacity: 0.85;
-}
-
-/* Footer */
-.footer {
-  width: 100%;
-  text-align: center;
-  padding: 60px 0;
-  margin-top: auto;
-}
-
-.footer img {
-  max-width: 200px;
-  height: auto;
-  opacity: 0.9;
-}
-
-/* Lightbox styles */
-.lightbox {
+/* Top-right nav */
+.header {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
-  display: none;
+  top: 16px;
+  right: 24px;
+  z-index: 10;
+}
+
+.header .links a {
+  font-size: 12px;
+  margin-left: 16px;
+  text-decoration: none;
+  color: #111;
+}
+
+.header .links a:hover {
+  opacity: 0.7;
+}
+
+/* Main content centered vertically & horizontally */
+.main-content {
+  height: 100vh;                 /* full screen */
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  padding: 0;
+  margin: 0;
 }
 
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
+/* Container for the horizontal strip */
+.gallery-frame {
+  width: 100%;
+  max-width: 1400px;             /* how wide the strip can get */
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
-.lightbox.active {
+/* Horizontal scrolling row */
+.gallery-row {
   display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+  align-items: center;           /* vertically center images in the strip */
 }
 
-/* =========================
-   Responsive (mobile grid)
-   ========================= */
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
-  }
+/* Faint scrollbar (horizontal only) */
 
-  /* Keep mobile sidebar behavior like before */
-  .header {
-    position: static;
-    width: 100%;
-    height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding: 20px;
-  }
-
-  /* Switch gallery to a real grid on phones */
-  .gallery-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);  /* 2 per row on phones */
-    gap: 12px;
-    max-width: 100%;
-  }
-
-  /* Images fill their grid cells */
-  .gallery-row img {
-    width: 100%;
-    height: auto;            /* keep aspect ratio */
-    border-radius: 4px;
-  }
-
-  .footer img {
-    max-width: 140px;
-  }
+/* Firefox */
+.gallery-row {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
 }
 
-/* Video thumbs inside index gallery */
-.video-thumb {
-  position: relative;
-  display: block;
-  line-height: 0;
+/* WebKit (Chrome/Safari) */
+.gallery-row::-webkit-scrollbar {
+  height: 4px;
 }
 
-.video-thumb img {
-  display: block;
-  width: 300px;   /* matches your photo size */
-  height: auto;
+.gallery-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gallery-row::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);  /* super light */
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0,0,0,.2);
-  transition: transform .3s ease, opacity .3s ease;
 }
 
-.video-thumb:hover img {
-  transform: scale(1.03);
-  opacity: 0.9;
+.gallery-row:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);  /* slightly darker on hover */
 }
 
-.play-badge {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: 2rem;
-  color: white;
-  text-shadow: 0 2px 8px rgba(0,0,0,.6);
-  opacity: 0;
-  transition: opacity .2s ease;
-  pointer-events: none;
+/* Images in the strip */
+.gallery-row a img {
+  height: 260px;                 /* adjust if you want them taller/shorter */
+  width: auto;
+  object-fit: cover;
+  display: block;
 }
 
-.video-thumb:hover .play-badge {
-  opacity: 1;
+/* Video thumbs same height so strip feels uniform */
+.gallery-row a.video-thumb img {
+  height: 260px;
 }
 
-/* Mobile: thumbnails shrink into the grid like photos */
-@media (max-width: 768px) {
-  .video-thumb img {
-    width: 100%;
-  }
+/* Footer centered at bottom */
+.footer {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
 }
 
-
-/* Optional: 3 columns on bigger phones (uncomment if you want)
-@media (min-width: 600px) and (max-width: 768px) {
-  .gallery-row {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.footer a {
+  text-decoration: none;
+  color: #111;
 }
-*/
+
