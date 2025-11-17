@@ -1,21 +1,19 @@
-/* Global reset */
-* {
+/* RESET / BASE */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* Full-page + background image */
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  overflow: hidden;               /* no vertical scroll */
+  overflow: hidden;                 /* no vertical scroll */
 }
 
-/* This is your full-screen background image.
-   To change it monthly, just swap the file or path here. */
 body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   background-image: url("bg_01.jpg"); /* <- put your image file here */
   background-size: cover;
   background-position: center;
@@ -24,15 +22,15 @@ body {
   color: #111;
 }
 
-/* Top-left name */
+/* TOP-LEFT NAME */
 .top-corner-title {
   position: fixed;
   top: 16px;
   left: 24px;
+  z-index: 20;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  z-index: 10;
 }
 
 .top-corner-title a {
@@ -40,64 +38,58 @@ body {
   color: #111;
 }
 
-/* Top-right nav */
+/* TOP-RIGHT MENU */
 .header {
   position: fixed;
   top: 16px;
   right: 24px;
-  z-index: 10;
+  z-index: 20;
+}
+
+.header .links {
+  display: flex;
+  flex-wrap: wrap;                 /* allows wrapping on smaller screens */
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 .header .links a {
   font-size: 12px;
-  margin-left: 16px;
   text-decoration: none;
   color: #111;
 }
 
 .header .links a:hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
-/* Main content centered vertically & horizontally */
+/* MAIN AREA – centered horizontally */
 .main-content {
-  height: 100vh;                 /* full screen */
+  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  margin: 0;
-}
-
-/* Container for the horizontal strip */
-.gallery-frame {
-  width: 100%;
-  max-width: 1400px;             /* how wide the strip can get */
   padding: 0 40px;
   box-sizing: border-box;
 }
 
-/* Horizontal scrolling row */
+.gallery-frame {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* HORIZONTAL SCROLL STRIP */
 .gallery-row {
   display: flex;
-  gap: 1.5rem;
+  gap: 16px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  padding-bottom: 0.5rem;
-  align-items: center;           /* vertically center images in the strip */
+  padding-bottom: 8px;             /* space so scrollbar isn't cut off */
 }
 
-/* Faint scrollbar (horizontal only) */
-
-/* Firefox */
-.gallery-row {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
-}
-
-/* WebKit (Chrome/Safari) */
+/* Super light horizontal scrollbar */
 .gallery-row::-webkit-scrollbar {
   height: 4px;
 }
@@ -107,34 +99,35 @@ body {
 }
 
 .gallery-row::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.08);  /* super light */
+  background: rgba(0,0,0,0.08);
   border-radius: 4px;
 }
 
 .gallery-row:hover::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);  /* slightly darker on hover */
+  background: rgba(0,0,0,0.15);
 }
 
-/* Images in the strip */
+/* Images in strip */
 .gallery-row a img {
-  height: 260px;                 /* adjust if you want them taller/shorter */
+  height: 260px;
   width: auto;
   object-fit: cover;
   display: block;
 }
 
-/* Video thumbs same height so strip feels uniform */
+/* Video thumbs same height so everything lines up */
 .gallery-row a.video-thumb img {
   height: 260px;
 }
 
-/* Footer centered at bottom */
+/* FOOTER */
 .footer {
   position: fixed;
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 10px;
+  z-index: 20;
 }
 
 .footer a {
@@ -142,3 +135,48 @@ body {
   color: #111;
 }
 
+/* =========================
+   MOBILE TWEAKS
+   ========================= */
+
+@media (max-width: 768px) {
+  /* allow slight vertical scroll if needed so menu doesn't clash with footer */
+  html, body {
+    overflow-y: hidden;         /* keep no vertical scroll if you want it strict */
+  }
+
+  .top-corner-title {
+    top: 10px;
+    left: 12px;
+    font-size: 11px;
+  }
+
+  .header {
+    top: 34px;
+    right: 12px;
+    left: 12px;
+  }
+
+  .header .links {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .header .links a {
+    font-size: 10px;
+  }
+
+  .main-content {
+    padding: 0 16px;
+  }
+
+  .gallery-row a img,
+  .gallery-row a.video-thumb img {
+    height: 150px;          /* smaller images so you see them fully */
+  }
+
+  .footer {
+    bottom: 10px;
+    font-size: 9px;
+  }
+}
