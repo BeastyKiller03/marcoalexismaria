@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- Floating top-left title (clickable back to home) -->
+  <!-- Floating top-left title -->
   <div class="top-corner-title">
     <a href="index.html">Marco Maria</a>
   </div>
@@ -27,32 +27,34 @@
     </div>
   </div>
 
-  <!-- MAIN area (transparent, background image is on <body>) -->
+  <!-- MAIN area -->
   <main class="main-content">
     <div class="gallery-frame">
       <div class="gallery-row">
-        <!-- Photos -->
-        <a href="photos.html#img1"><img src="IMG_1.jpg"  alt="Image 1" /></a>
-        <a href="photos.html#img2"><img src="IMG_2.jpg"  alt="Image 2" /></a>
-        <a href="photos.html#img3"><img src="IMG_3.jpg"  alt="Image 3" /></a>
-        <a href="photos.html#img4"><img src="IMG_4.jpg"  alt="Image 4" /></a>
-        <a href="photos.html#img5"><img src="IMG_5.jpg"  alt="Image 5" /></a>
-        <a href="photos.html#img6"><img src="IMG_6.jpg"  alt="Image 6" /></a>
-        <a href="photos.html#img7"><img src="IMG_7.jpg"  alt="Image 7" /></a>
-        <a href="photos.html#img8"><img src="IMG_8.jpg"  alt="Image 8" /></a>
-        <a href="photos.html#img9"><img src="IMG_9.jpg"  alt="Image 9" /></a>
-        <a href="photos.html#img10"><img src="IMG_10.jpg" alt="Image 10" /></a>
 
-        <!-- Video thumbs -->
+        <!-- PHOTOS — LAZY LOADED -->
+        <a href="photos.html#img1"><img data-src="IMG_1.jpg"  alt="Image 1" class="lazy-img" /></a>
+        <a href="photos.html#img2"><img data-src="IMG_2.jpg"  alt="Image 2" class="lazy-img" /></a>
+        <a href="photos.html#img3"><img data-src="IMG_3.jpg"  alt="Image 3" class="lazy-img" /></a>
+        <a href="photos.html#img4"><img data-src="IMG_4.jpg"  alt="Image 4" class="lazy-img" /></a>
+        <a href="photos.html#img5"><img data-src="IMG_5.jpg"  alt="Image 5" class="lazy-img" /></a>
+        <a href="photos.html#img6"><img data-src="IMG_6.jpg"  alt="Image 6" class="lazy-img" /></a>
+        <a href="photos.html#img7"><img data-src="IMG_7.jpg"  alt="Image 7" class="lazy-img" /></a>
+        <a href="photos.html#img8"><img data-src="IMG_8.jpg"  alt="Image 8" class="lazy-img" /></a>
+        <a href="photos.html#img9"><img data-src="IMG_9.jpg"  alt="Image 9" class="lazy-img" /></a>
+        <a href="photos.html#img10"><img data-src="IMG_10.jpg" alt="Image 10" class="lazy-img" /></a>
+
+        <!-- VIDEOS — ALSO LAZY -->
         <a href="videos.html" class="video-thumb">
-          <img src="img_02.png" alt="ANG3L — Official Video" loading="lazy" />
+          <img data-src="img_02.png" alt="ANG3L — Official Video" class="lazy-img" />
         </a>
         <a href="videos.html" class="video-thumb">
-          <img src="img_01.png" alt="ED-EMY — Official Video" loading="lazy" />
+          <img data-src="img_01.png" alt="ED-EMY — Official Video" class="lazy-img" />
         </a>
         <a href="videos.html" class="video-thumb">
-          <img src="img_03.png" alt="TAPED" loading="lazy" />
+          <img data-src="img_03.png" alt="TAPED" class="lazy-img" />
         </a>
+
       </div>
     </div>
   </main>
@@ -65,17 +67,47 @@
   </footer>
 
   <script>
+    /* ---- SHUFFLE IMAGES ---- */
     document.addEventListener("DOMContentLoaded", () => {
       const gallery = document.querySelector(".gallery-row");
       const items = Array.from(gallery.children);
 
-      // Shuffle items (Fisher–Yates)
       for (let i = items.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [items[i], items[j]] = [items[j], items[i]];
       }
 
       items.forEach(item => gallery.appendChild(item));
+    });
+
+    /* ---- TRUE LAZY LOADING (HORIZONTAL) ---- */
+    document.addEventListener("DOMContentLoaded", () => {
+      const lazyImages = document.querySelectorAll(".lazy-img");
+
+      const options = {
+        root: document.querySelector(".gallery-row"), // horizontal container
+        rootMargin: "200px", // preload slightly before in view
+        threshold: 0.01
+      };
+
+      const loadImage = (img) => {
+        const src = img.getAttribute("data-src");
+        if (!src) return;
+        img.src = src;
+        img.removeAttribute("data-src");
+        img.classList.remove("lazy-img");
+      };
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadImage(entry.target);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      lazyImages.forEach(img => observer.observe(img));
     });
   </script>
 
