@@ -4,86 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Videos - marcoalexismaria</title>
+  <!-- Reuse the same global styles as index -->
+  <link rel="stylesheet" href="style.css" />
   <style>
-    * { box-sizing: border-box; }
+    /* Page-specific layout for the videos page */
 
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #fff;
+      background: #ffffff;
       color: #000;
-      overflow-x: hidden;
     }
 
-    /* Top-right title (fixed over content) */
-    .top-corner-title {
-      position: fixed;
-      top: 20px;
-      right: 30px;
-      z-index: 1001;
-    }
-    .top-corner-title p {
-      margin: 0;
-      font-size: 0.8rem;
-      color: #000;
-      text-transform: lowercase;
-      opacity: 0.9;
-    }
-
-    /* Overlay sidebar menu */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 200px;
-      height: 100vh;
-      padding: 40px 20px;
+    /* Main area under the fixed top nav */
+    .videos-main {
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      gap: 15px;
-      background: transparent; /* change to rgba(255,255,255,.85) if you want a veil */
-      z-index: 1002;
+      justify-content: center;
+      /* leave room for top nav */
+      padding: 120px 16px 40px;
+      box-sizing: border-box;
     }
-    .header a {
-      color: #000;
-      text-decoration: none;
-      font-size: 1rem;
-    }
-    .header a:hover { opacity: .6; }
 
-    /* Centered video gallery column */
     .video-gallery {
       width: 100%;
       max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 2rem;
-      z-index: 1; /* sits under the menu */
     }
 
-    /* Thumbnail card with subtle play badge on hover (desktop) */
     .video-thumb {
       position: relative;
       display: block;
       line-height: 0; /* remove tiny baseline gap */
+      text-decoration: none;
     }
+
     .video-thumb img {
       display: block;
       width: auto;
       max-width: min(90vw, 800px);
       height: auto;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,.2);
-      transition: transform .3s ease, opacity .3s ease;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
+
     .video-thumb:hover img {
       transform: scale(1.03);
       opacity: 0.95;
     }
+
     .play-badge {
       position: absolute;
       inset: 0;
@@ -91,64 +64,73 @@
       place-items: center;
       font-size: 2rem;
       color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,.6);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
       opacity: 0;
-      transition: opacity .2s ease;
+      transition: opacity 0.2s ease;
       pointer-events: none;
     }
-    .video-thumb:hover .play-badge { opacity: 1; }
 
-    /* Mobile tweaks (optional grid later if you want) */
+    .video-thumb:hover .play-badge {
+      opacity: 1;
+    }
+
+    /* Mobile tweaks */
     @media (max-width: 768px) {
+      .videos-main {
+        padding: 96px 12px 32px;
+      }
+
       .video-gallery {
-        padding: 1.25rem 1rem;
         gap: 1.25rem;
       }
+
       .video-thumb img {
         max-width: 100%;
         border-radius: 6px;
       }
-      .play-badge { font-size: 1.6rem; }
+
+      .play-badge {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating top-right logo -->
+  <!-- Top-left name (same as index, clickable home) -->
   <div class="top-corner-title">
-    <p>MARCO MARIA</p>
+    <a href="index.html">Marco Maria</a>
   </div>
 
-  <!-- Overlay sidebar menu -->
+  <!-- Top-right menu (same position as index, reduced links) -->
   <div class="header">
-    <a href="index.html">Home</a>
-    <a href="videos.html">Videos</a>
-    <a href="music.html">Music</a>
-    <a href="photos.html">Photographs</a>
-    <a href="https://www.instagram.com/perfectlycraftedmusic/" target="_blank">Instagram</a>
-    <a href="https://tumblr.com/blog/marcoalexismaria" target="_blank">Tumblr</a>
-    <a href="mailto:perfectlycraftedmusic@gmail.com">Email</a>
-    <a href="background.html">Background</a>
+    <div class="links">
+      <a href="videos.html">Videos</a>
+      <a href="photos.html">Photographs</a>
+      <a href="events.html">Events</a>
+      <a href="background.html">About</a>
+    </div>
   </div>
 
-  <!-- Centered thumbnails -->
-  <div class="video-gallery">
-    <a class="video-thumb" href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank" rel="noopener">
-      <img src="img_02.png" alt="ANG3L — Official Video" loading="lazy" />
-      <span class="play-badge">▶</span>
-    </a>
+  <!-- Centered video thumbnails -->
+  <main class="videos-main">
+    <div class="video-gallery">
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank" rel="noopener">
+        <img src="img_02.png" alt="ANG3L — Official Video" loading="lazy" />
+        <span class="play-badge">▶</span>
+      </a>
 
-    <a class="video-thumb" href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank" rel="noopener">
-      <img src="img_01.png" alt="ED-EMY — Official Video" loading="lazy" />
-      <span class="play-badge">▶</span>
-    </a>
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank" rel="noopener">
+        <img src="img_01.png" alt="ED-EMY — Official Video" loading="lazy" />
+        <span class="play-badge">▶</span>
+      </a>
 
-    <a class="video-thumb" href="https://www.youtube.com/watch?v=Qyz7bBXBfME" target="_blank" rel="noopener">
-  <img src="img_03.png" alt="New Video Thumbnail" loading="lazy" />
-  <span class="play-badge">▶</span>
-    </a>
-  </div>
+      <a class="video-thumb" href="https://www.youtube.com/watch?v=Qyz7bBXBfME" target="_blank" rel="noopener">
+        <img src="img_03.png" alt="New Video Thumbnail" loading="lazy" />
+        <span class="play-badge">▶</span>
+      </a>
+    </div>
+  </main>
 
 </body>
 </html>
-
