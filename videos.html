@@ -3,106 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Videos - marcoalexismaria</title>
-  <!-- Reuse the same global styles as index -->
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Page-specific layout for the videos page */
+  <title>Videos - Marco Maria</title>
 
-    body {
+  <style>
+    /* BASIC RESET */
+    * { box-sizing: border-box; }
+
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #ffffff;
+      background: #faf9f6; /* same as index panel */
+      color: #000;
+      overflow-x: hidden;
+    }
+
+    /* TOP LEFT NAME */
+    .top-corner-title {
+      position: fixed;
+      top: 16px;
+      left: 24px;
+      z-index: 1000;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .top-corner-title a {
+      text-decoration: none;
       color: #000;
     }
 
-    /* Main area under the fixed top nav */
-    .videos-main {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      /* leave room for top nav */
-      padding: 120px 16px 40px;
-      box-sizing: border-box;
+    /* TOP RIGHT MENU (same as index) */
+    .header {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      z-index: 1000;
     }
 
-    .video-gallery {
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .video-thumb {
-      position: relative;
-      display: block;
-      line-height: 0; /* remove tiny baseline gap */
+    .header .links a {
+      font-size: 12px;
+      margin-left: 16px;
       text-decoration: none;
+      color: #000;
     }
 
+    .header .links a:hover {
+      opacity: 0.6;
+    }
+
+    /* MAIN SECTION (same structure as index) */
+    .main-content {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-frame {
+      width: 100%;
+      max-width: 1400px;
+      padding: 0 40px;
+    }
+
+    /* HORIZONTAL SCROLL ROW */
+    .gallery-row {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      padding-bottom: 0.5rem;
+      white-space: nowrap;
+    }
+
+    /* LIGHT SCROLLBAR */
+    .gallery-row::-webkit-scrollbar {
+      height: 4px;
+    }
+    .gallery-row::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.08);
+      border-radius: 4px;
+    }
+    .gallery-row:hover::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* VIDEO THUMBNAILS */
     .video-thumb img {
-      display: block;
+      height: 260px;
       width: auto;
-      max-width: min(90vw, 800px);
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      display: block;
+      border-radius: 6px;
+      object-fit: cover;
+      transition: transform .25s ease, opacity .25s ease;
     }
-
-    .video-thumb:hover img {
+    .video-thumb img:hover {
       transform: scale(1.03);
       opacity: 0.95;
     }
 
-    .play-badge {
+    /* PLAY BADGE (optional aesthetic) */
+    .video-thumb {
+      position: relative;
+    }
+    .video-thumb .play-badge {
       position: absolute;
       inset: 0;
       display: grid;
       place-items: center;
       font-size: 2rem;
       color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      text-shadow: 0 0 10px rgba(0,0,0,0.8);
       opacity: 0;
-      transition: opacity 0.2s ease;
-      pointer-events: none;
+      transition: opacity .2s;
     }
-
     .video-thumb:hover .play-badge {
       opacity: 1;
     }
 
-    /* Mobile tweaks */
+    /* MOBILE FIXES */
     @media (max-width: 768px) {
-      .videos-main {
-        padding: 96px 12px 32px;
+      .header .links a {
+        font-size: 11px;
+        margin-left: 10px;
       }
-
-      .video-gallery {
-        gap: 1.25rem;
+      .gallery-frame {
+        padding: 0 10px;
       }
-
       .video-thumb img {
-        max-width: 100%;
-        border-radius: 6px;
-      }
-
-      .play-badge {
-        font-size: 1.6rem;
+        height: 180px; /* smaller thumbnails for mobile so they fit */
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top-left name (same as index, clickable home) -->
+  <!-- TOP LEFT NAME -->
   <div class="top-corner-title">
     <a href="index.html">Marco Maria</a>
   </div>
 
-  <!-- Top-right menu (same position as index, reduced links) -->
+  <!-- TOP RIGHT NAV -->
   <div class="header">
     <div class="links">
       <a href="videos.html">Videos</a>
@@ -112,25 +155,30 @@
     </div>
   </div>
 
-  <!-- Centered video thumbnails -->
-  <main class="videos-main">
-    <div class="video-gallery">
-      <a class="video-thumb" href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank" rel="noopener">
-        <img src="img_02.png" alt="ANG3L — Official Video" loading="lazy" />
-        <span class="play-badge">▶</span>
-      </a>
+  <!-- MAIN: horizontal scrolling video thumbnails -->
+  <main class="main-content">
+    <div class="gallery-frame">
+      <div class="gallery-row">
 
-      <a class="video-thumb" href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank" rel="noopener">
-        <img src="img_01.png" alt="ED-EMY — Official Video" loading="lazy" />
-        <span class="play-badge">▶</span>
-      </a>
+        <a class="video-thumb" href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank">
+          <img src="img_02.png" alt="ANG3L — Official Video" loading="lazy">
+          <span class="play-badge">▶</span>
+        </a>
 
-      <a class="video-thumb" href="https://www.youtube.com/watch?v=Qyz7bBXBfME" target="_blank" rel="noopener">
-        <img src="img_03.png" alt="New Video Thumbnail" loading="lazy" />
-        <span class="play-badge">▶</span>
-      </a>
+        <a class="video-thumb" href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank">
+          <img src="img_01.png" alt="ED-EMY — Official Video" loading="lazy">
+          <span class="play-badge">▶</span>
+        </a>
+
+        <a class="video-thumb" href="https://www.youtube.com/watch?v=Qyz7bBXBfME" target="_blank">
+          <img src="img_03.png" alt="TAPED" loading="lazy">
+          <span class="play-badge">▶</span>
+        </a>
+
+      </div>
     </div>
   </main>
 
 </body>
 </html>
+
