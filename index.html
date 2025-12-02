@@ -8,22 +8,22 @@
 </head>
 <body>
 
-  <!-- Floating top-left title -->
+  <!-- Top-left name -->
   <div class="top-corner-title">
-    <a href="index.html">Marco Maria</a>
-    
+    <a href="index.html">MARCO MARIA</a>
   </div>
 
+  <!-- Red emblem square -->
   <div class="red-square"></div>
 
-  <!-- Top-right links -->
+  <!-- Top-right menu -->
   <div class="header">
     <div class="links">
-    <a href="videos.html">Videos</a>
-<a href="music.html">Music</a>
-<a href="photos.html">Photographs</a>
-<a href="events.html">Events</a>
-<a href="background.html">About</a>
+      <a href="videos.html">Videos</a>
+      <a href="music.html">Music</a>
+      <a href="photos.html">Photographs</a>
+      <a href="events.html">Events</a>
+      <a href="background.html">About</a>
     </div>
   </div>
 
@@ -31,20 +31,19 @@
   <main class="main-content">
     <div class="gallery-frame">
       <div class="gallery-row">
-
-        <!-- PHOTOS — LAZY LOADED -->
-        <a href="photos.html#img1"><img data-src="IMG_1.jpg"  alt="Image 1" class="lazy-img" /></a>
-        <a href="photos.html#img2"><img data-src="IMG_2.jpg"  alt="Image 2" class="lazy-img" /></a>
-        <a href="photos.html#img3"><img data-src="IMG_3.jpg"  alt="Image 3" class="lazy-img" /></a>
-        <a href="photos.html#img4"><img data-src="IMG_4.jpg"  alt="Image 4" class="lazy-img" /></a>
-        <a href="photos.html#img5"><img data-src="IMG_5.jpg"  alt="Image 5" class="lazy-img" /></a>
-        <a href="photos.html#img6"><img data-src="IMG_6.jpg"  alt="Image 6" class="lazy-img" /></a>
-        <a href="photos.html#img7"><img data-src="IMG_7.jpg"  alt="Image 7" class="lazy-img" /></a>
-        <a href="photos.html#img8"><img data-src="IMG_8.jpg"  alt="Image 8" class="lazy-img" /></a>
-        <a href="photos.html#img9"><img data-src="IMG_9.jpg"  alt="Image 9" class="lazy-img" /></a>
+        <!-- Photos (lazy-loaded) -->
+        <a href="photos.html#img1"><img data-src="IMG_1.jpg"  alt="Image 1"  class="lazy-img" /></a>
+        <a href="photos.html#img2"><img data-src="IMG_2.jpg"  alt="Image 2"  class="lazy-img" /></a>
+        <a href="photos.html#img3"><img data-src="IMG_3.jpg"  alt="Image 3"  class="lazy-img" /></a>
+        <a href="photos.html#img4"><img data-src="IMG_4.jpg"  alt="Image 4"  class="lazy-img" /></a>
+        <a href="photos.html#img5"><img data-src="IMG_5.jpg"  alt="Image 5"  class="lazy-img" /></a>
+        <a href="photos.html#img6"><img data-src="IMG_6.jpg"  alt="Image 6"  class="lazy-img" /></a>
+        <a href="photos.html#img7"><img data-src="IMG_7.jpg"  alt="Image 7"  class="lazy-img" /></a>
+        <a href="photos.html#img8"><img data-src="IMG_8.jpg"  alt="Image 8"  class="lazy-img" /></a>
+        <a href="photos.html#img9"><img data-src="IMG_9.jpg"  alt="Image 9"  class="lazy-img" /></a>
         <a href="photos.html#img10"><img data-src="IMG_10.jpg" alt="Image 10" class="lazy-img" /></a>
 
-        <!-- VIDEOS — ALSO LAZY -->
+        <!-- Video thumbs -->
         <a href="videos.html" class="video-thumb">
           <img data-src="img_02.png" alt="ANG3L — Official Video" class="lazy-img" />
         </a>
@@ -54,12 +53,11 @@
         <a href="videos.html" class="video-thumb">
           <img data-src="img_03.png" alt="TAPED" class="lazy-img" />
         </a>
-
       </div>
     </div>
   </main>
 
-  <!-- Bottom-center footer -->
+  <!-- Footer -->
   <footer class="footer">
     <a href="secret.html">
       <span>© 3^07</span>
@@ -80,13 +78,14 @@
       items.forEach(item => gallery.appendChild(item));
     });
 
-    /* ---- TRUE LAZY LOADING (HORIZONTAL) ---- */
+    /* ---- TRUE LAZY LOADING FOR HORIZONTAL STRIP ---- */
     document.addEventListener("DOMContentLoaded", () => {
       const lazyImages = document.querySelectorAll(".lazy-img");
+      const galleryRow = document.querySelector(".gallery-row");
 
       const options = {
-        root: document.querySelector(".gallery-row"), // horizontal container
-        rootMargin: "200px", // preload slightly before in view
+        root: galleryRow,
+        rootMargin: "200px",
         threshold: 0.01
       };
 
@@ -97,7 +96,6 @@
         img.removeAttribute("data-src");
         img.classList.remove("lazy-img");
       };
-
 
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
@@ -114,4 +112,5 @@
 
 </body>
 </html>
+
 
