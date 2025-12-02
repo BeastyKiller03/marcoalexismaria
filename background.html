@@ -5,96 +5,194 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Background - Marco Maria</title>
   <style>
-    body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
-      color: #000;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 4rem auto;
-      padding: 2rem;
+    * {
       box-sizing: border-box;
     }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: #000;
     }
 
-    p {
-      line-height: 1.7;
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
+    /* ---------- TOP BAR (same vibe as index) ---------- */
+
+    .top-corner-title {
+      position: fixed;
+      top: 16px;
+      left: 24px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      z-index: 1000;
     }
 
-    .socials {
-      margin-top: 2rem;
-      font-size: 1rem;
+    .top-corner-title a {
+      color: #000;
+      text-decoration: none;
     }
 
-    .socials a {
+    .top-corner-title a:hover {
+      opacity: 0.6;
+    }
+
+    .header {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      z-index: 1000;
+    }
+
+    .header .links {
+      display: flex;
+      flex-wrap: wrap;      /* helps on small screens */
+      gap: 14px;
+      justify-content: flex-end;
+    }
+
+    .header .links a {
+      font-size: 12px;
+      text-decoration: none;
+      color: #000;
+    }
+
+    .header .links a:hover {
+      opacity: 0.6;
+    }
+
+    /* ---------- MAIN LAYOUT ---------- */
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;  /* space so content sits under the fixed nav */
+    }
+
+    /* Portrait at the top, small & centered */
+    .portrait-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      margin-bottom: 80px;
+    }
+
+    .portrait-wrapper img {
+      width: 120px;            /* tweak this for size */
+      height: auto;
+      object-fit: contain;
       display: block;
-      color: black;
+    }
+
+    /* Caption / text block with grey vertical line */
+    .bio-block {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .bio-inner {
+      border-left: 2px solid #d4d4d4;
+      padding-left: 18px;
+    }
+
+    .bio-line {
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0 0 6px 0;
+    }
+
+    .bio-line.meta {
+      margin-top: 12px;
+    }
+
+    a.social-link {
+      color: #000;
       text-decoration: none;
-      margin-bottom: 0.4rem;
     }
 
-    .socials a:hover {
-      opacity: 0.7;
+    a.social-link:hover {
+      opacity: 0.6;
     }
 
-    .back-link {
-      display: inline-block;
-      font-size: 1rem;
-      color: black;
-      text-decoration: none;
-      margin-top: 2.5rem;
-    }
+    /* ---------- MOBILE ---------- */
 
-    .back-link:hover {
-      opacity: 0.7;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 1.5rem;
-        margin: 2rem auto;
+    @media (max-width: 600px) {
+      main {
+        padding: 96px 16px 56px;
       }
 
-      h2 {
-        font-size: 1.6rem;
+      .portrait-wrapper {
+        margin-top: 24px;
+        margin-bottom: 56px;
       }
 
-      p {
-        font-size: 1rem;
+      .portrait-wrapper img {
+        width: 90px;
+      }
+
+      .header .links {
+        gap: 10px;
+      }
+
+      .header .links a {
+        font-size: 11px;
+      }
+
+      .bio-inner {
+        border-left-width: 1.5px;
+        padding-left: 14px;
+      }
+
+      .bio-line {
+        font-size: 13px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2></h2>
 
-    <p>Marco Alexis Maria</p>
+  <!-- top-left name (back to index) -->
+  <div class="top-corner-title">
+    <a href="index.html">MARCO MARIA</a>
+  </div>
 
-    <p>Born in Baldwin Park, California. Currently works in LA & the Inland Empire.  
-       Artist. Musician. Photographer. Designer. Creative Director.</p>
+  <!-- top-right menu -->
+  <div class="header">
+    <div class="links">
+      <a href="videos.html">Videos</a>
+      <a href="photos.html">Photographs</a>
+      <a href="events.html">Events</a>
+      <a href="background.html">About</a>
+    </div>
+  </div>
 
-    <p>Working on upcoming projects along with production side creative work.</p>
-
-    <div class="socials">
-      <a href="https://www.instagram.com/marcoalexismaria/" target="_blank">Instagram</a>
-      <a href="https://tumblr.com/blog/marcoalexismaria" target="_blank">Tumblr</a>
+  <main>
+    <!-- small self portrait -->
+    <div class="portrait-wrapper">
+      <!-- replace self_portrait.jpg with your actual image file -->
+      <img src="self_portrait.jpg" alt="Self portrait of Marco Maria" />
     </div>
 
-    <a class="back-link" href="index.html">&larr; Back</a>
-  </div>
+    <!-- caption / description block -->
+    <section class="bio-block">
+      <div class="bio-inner">
+        <p class="bio-line">© 2024 Marco Alexis Maria</p>
+        <p class="bio-line">Born in Baldwin Park, California. Working in Los Angeles / Inland Empire.</p>
+        <p class="bio-line">Artist, musician, photographer, designer, creative director.</p>
+        <p class="bio-line meta">
+          Currently developing PM projects and other production work.
+        </p>
+        <p class="bio-line meta">
+          <a class="social-link" href="https://www.instagram.com/marcoalexismaria/" target="_blank">Instagram</a> ·
+          <a class="social-link" href="https://tumblr.com/blog/marcoalexismaria" target="_blank">Tumblr</a> ·
+          <a class="social-link" href="mailto:mmarco8874@gmail.com">Email</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
 </body>
 </html>
+
