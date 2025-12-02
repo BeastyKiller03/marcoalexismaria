@@ -95,6 +95,8 @@
         img.classList.remove("lazy-img");
       };
 
+      <div class="red-square"></div>
+
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
