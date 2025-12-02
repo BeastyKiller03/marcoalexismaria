@@ -1,4 +1,21 @@
 /* RESET / BASE */
+/* Red emblem square */
+.red-square {
+  position: fixed;
+  top: 60px;        /* below the "Marco Maria" text */
+  left: 24px;       /* aligns with left margin of your title */
+  width: 70px;
+  height: 70px;
+  background: #ff0033;   /* bright red */
+  z-index: 999;          /* above everything but under menu */
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.red-square:hover {
+  opacity: 0.9;
+}
+
 *,
 *::before,
 *::after {
