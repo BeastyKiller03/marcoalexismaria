@@ -1,23 +1,21 @@
-/* ============= BASE / RESET ============= */
-
+/* RESET */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html,
-body {
+/* Base page */
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;              /* no vertical scroll */
+  overflow: hidden;               /* no vertical scroll */
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-    Arial, sans-serif;
-  background-image: url("bg_01.jpg");  /* your background */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  background-image: url("bg_01.jpg");  /* background photo */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -25,8 +23,18 @@ body {
   color: #111;
 }
 
-/* ============= TOP NAME + MENU ============= */
+/* Red emblem square */
+.red-square {
+  position: fixed;
+  top: 60px;           /* under name */
+  left: 24px;
+  width: 70px;
+  height: 70px;
+  background: #ff0033;
+  z-index: 15;
+}
 
+/* Top-left name */
 .top-corner-title {
   position: fixed;
   top: 16px;
@@ -42,23 +50,7 @@ body {
   color: #111;
 }
 
-/* Red emblem square */
-.red-square {
-  position: fixed;
-  top: 56px;              /* just under the name */
-  left: 24px;
-  width: 70px;
-  height: 70px;
-  background: #ff0033;
-  z-index: 19;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.red-square:hover {
-  opacity: 0.9;
-}
-
+/* Top-right menu */
 .header {
   position: fixed;
   top: 16px;
@@ -68,9 +60,9 @@ body {
 
 .header .links {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  flex-wrap: nowrap;
   gap: 12px;
+  justify-content: flex-end;
 }
 
 .header .links a {
@@ -83,8 +75,7 @@ body {
   opacity: 0.6;
 }
 
-/* ============= MAIN AREA / GALLERY ============= */
-
+/* Main area */
 .main-content {
   height: 100vh;
   width: 100%;
@@ -99,6 +90,7 @@ body {
   max-width: 1200px;
 }
 
+/* Horizontal gallery strip (desktop) */
 .gallery-row {
   display: flex;
   gap: 16px;
@@ -106,10 +98,9 @@ body {
   overflow-y: hidden;
   scroll-behavior: smooth;
   padding-bottom: 8px;
-  justify-content: center;
 }
 
-/* subtle scrollbar (desktop) */
+/* very light scrollbar */
 .gallery-row::-webkit-scrollbar {
   height: 4px;
 }
@@ -117,14 +108,14 @@ body {
   background: transparent;
 }
 .gallery-row::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0,0,0,0.08);
   border-radius: 4px;
 }
 .gallery-row:hover::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0,0,0,0.15);
 }
 
-/* images */
+/* Images in strip */
 .gallery-row a img {
   height: 260px;
   width: auto;
@@ -132,13 +123,7 @@ body {
   display: block;
 }
 
-/* make video thumbs same height */
-.gallery-row a.video-thumb img {
-  height: 260px;
-}
-
-/* ============= FOOTER ============= */
-
+/* Footer */
 .footer {
   position: fixed;
   bottom: 16px;
@@ -147,57 +132,83 @@ body {
   font-size: 10px;
   z-index: 20;
 }
-
 .footer a {
-  text-decoration: none;
   color: #111;
+  text-decoration: none;
 }
 
-/* ============= MOBILE (≤768px) ============= */
-
+/* =========================
+   MOBILE (≤ 768px)
+   ========================= */
 @media (max-width: 768px) {
-  html,
-  body {
-    overflow-y: hidden;          /* no vertical scroll on mobile */
+
+  html, body {
     height: 100vh;
+    overflow-y: hidden;          /* still no vertical scroll */
+  }
+
+  /* Smaller name */
+  .top-corner-title {
+    top: 12px;
+    left: 16px;
+    font-size: 11px;
+  }
+
+  /* Move menu below name so it doesn't overlap */
+  .header {
+    top: 40px;                  /* pushes menu down */
+    left: 16px;
+    right: 16px;
   }
 
   .header .links {
+    justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 10px;
   }
 
+  /* Red square keeps same alignment but a bit smaller if you want */
+  .red-square {
+    top: 72px;
+    left: 16px;
+    width: 64px;
+    height: 64px;
+  }
+
+  /* Gallery is centered vertically, fills remaining height */
   .main-content {
-    height: calc(100vh - 80px);  /* leave space for top bar */
+    height: calc(100vh - 120px); /* minus header + space */
     padding: 0;
     align-items: center;
     justify-content: center;
   }
 
   .gallery-frame {
-    max-width: 100%;
+    width: 100%;
   }
 
   .gallery-row {
     width: 100%;
-    padding: 0 12px;
-    gap: 12px;
-    justify-content: flex-start;
+    padding: 0 1rem;
+    gap: 1rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
   }
 
-  /* each item = 1/3 of screen width */
+  /* Each item is exactly 1/3 of screen width */
   .gallery-row a {
-    flex: 0 0 calc((100vw - 48px) / 3); /* 3 items minus padding/gaps */
+    flex: 0 0 calc(33.33% - 0.67rem);
     display: flex;
     justify-content: center;
   }
 
   .gallery-row a img {
-    height: auto;
     width: 100%;
+    height: auto;
     object-fit: cover;
   }
 
-  /* hide scrollbar on mobile */
+  /* Hide horizontal scrollbar visually */
   .gallery-row::-webkit-scrollbar {
     display: none;
   }
