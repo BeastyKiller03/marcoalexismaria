@@ -156,45 +156,54 @@ body {
    MOBILE TWEAKS
    ========================= */
 
+/* --- MOBILE (≤ 768px) --- */
 @media (max-width: 768px) {
-  /* allow slight vertical scroll if needed so menu doesn't clash with footer */
+
+  /* No vertical scroll */
   html, body {
-    overflow-y: hidden;         /* keep no vertical scroll if you want it strict */
+    overflow-y: hidden;
+    height: 100vh;
   }
 
-  .top-corner-title {
-    top: 10px;
-    left: 12px;
-    font-size: 11px;
-  }
-
-  .header {
-    top: 34px;
-    right: 12px;
-    left: 12px;
-  }
-
-  .header .links {
-    justify-content: flex-start;
-    gap: 8px;
-  }
-
-  .header .links a {
-    font-size: 10px;
-  }
-
+  /* Make the gallery exactly 1 screen tall */
   .main-content {
-    padding: 0 16px;
+    height: calc(100vh - 80px); /* remove top menu height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
 
-  .gallery-row a img,
-  .gallery-row a.video-thumb img {
-    height: 150px;          /* smaller images so you see them fully */
+  /* Horizontal scroll container */
+  .gallery-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    padding: 0 1rem;
   }
 
-  .footer {
-    bottom: 10px;
-    font-size: 9px;
+  /* Each image takes 1/3 of the screen */
+  .gallery-row a {
+    flex: 0 0 calc(33.33% - 1rem);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Images scale nicely */
+  .gallery-row img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  /* Hide scrollbars */
+  .gallery-row::-webkit-scrollbar {
+    display: none;
   }
 }
 
