@@ -1,20 +1,4 @@
-/* RESET / BASE */
-/* Red emblem square */
-.red-square {
-  position: fixed;
-  top: 60px;        /* below the "Marco Maria" text */
-  left: 24px;       /* aligns with left margin of your title */
-  width: 70px;
-  height: 70px;
-  background: #ff0033;   /* bright red */
-  z-index: 999;          /* above everything but under menu */
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.red-square:hover {
-  opacity: 0.9;
-}
+/* ============= BASE / RESET ============= */
 
 *,
 *::before,
@@ -22,24 +6,27 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;                 /* no vertical scroll */
+  overflow: hidden;              /* no vertical scroll */
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  background-image: url("bg_01.jpg"); /* <- put your image file here */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    Arial, sans-serif;
+  background-image: url("bg_01.jpg");  /* your background */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;   /* stays still */
+  background-attachment: fixed;
   color: #111;
 }
 
-/* TOP-LEFT NAME */
+/* ============= TOP NAME + MENU ============= */
+
 .top-corner-title {
   position: fixed;
   top: 16px;
@@ -55,7 +42,23 @@ body {
   color: #111;
 }
 
-/* TOP-RIGHT MENU */
+/* Red emblem square */
+.red-square {
+  position: fixed;
+  top: 56px;              /* just under the name */
+  left: 24px;
+  width: 70px;
+  height: 70px;
+  background: #ff0033;
+  z-index: 19;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.red-square:hover {
+  opacity: 0.9;
+}
+
 .header {
   position: fixed;
   top: 16px;
@@ -65,7 +68,7 @@ body {
 
 .header .links {
   display: flex;
-  flex-wrap: wrap;                 /* allows wrapping on smaller screens */
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
 }
@@ -80,7 +83,8 @@ body {
   opacity: 0.6;
 }
 
-/* MAIN AREA – centered horizontally */
+/* ============= MAIN AREA / GALLERY ============= */
+
 .main-content {
   height: 100vh;
   width: 100%;
@@ -88,7 +92,6 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 40px;
-  box-sizing: border-box;
 }
 
 .gallery-frame {
@@ -96,35 +99,32 @@ body {
   max-width: 1200px;
 }
 
-/* HORIZONTAL SCROLL STRIP */
 .gallery-row {
   display: flex;
   gap: 16px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  padding-bottom: 8px;             /* space so scrollbar isn't cut off */
+  padding-bottom: 8px;
+  justify-content: center;
 }
 
-/* Super light horizontal scrollbar */
+/* subtle scrollbar (desktop) */
 .gallery-row::-webkit-scrollbar {
   height: 4px;
 }
-
 .gallery-row::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .gallery-row::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.08);
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 4px;
 }
-
 .gallery-row:hover::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
+  background: rgba(0, 0, 0, 0.15);
 }
 
-/* Images in strip */
+/* images */
 .gallery-row a img {
   height: 260px;
   width: auto;
@@ -132,12 +132,13 @@ body {
   display: block;
 }
 
-/* Video thumbs same height so everything lines up */
+/* make video thumbs same height */
 .gallery-row a.video-thumb img {
   height: 260px;
 }
 
-/* FOOTER */
+/* ============= FOOTER ============= */
+
 .footer {
   position: fixed;
   bottom: 16px;
@@ -152,58 +153,54 @@ body {
   color: #111;
 }
 
-/* =========================
-   MOBILE TWEAKS
-   ========================= */
+/* ============= MOBILE (≤768px) ============= */
 
-/* --- MOBILE (≤ 768px) --- */
 @media (max-width: 768px) {
-
-  /* No vertical scroll */
-  html, body {
-    overflow-y: hidden;
+  html,
+  body {
+    overflow-y: hidden;          /* no vertical scroll on mobile */
     height: 100vh;
   }
 
-  /* Make the gallery exactly 1 screen tall */
+  .header .links {
+    gap: 10px;
+  }
+
   .main-content {
-    height: calc(100vh - 80px); /* remove top menu height */
-    display: flex;
+    height: calc(100vh - 80px);  /* leave space for top bar */
+    padding: 0;
     align-items: center;
     justify-content: center;
-    padding: 0;
   }
 
-  /* Horizontal scroll container */
+  .gallery-frame {
+    max-width: 100%;
+  }
+
   .gallery-row {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 12px;
+    gap: 12px;
+    justify-content: flex-start;
   }
 
-  /* Each image takes 1/3 of the screen */
+  /* each item = 1/3 of screen width */
   .gallery-row a {
-    flex: 0 0 calc(33.33% - 1rem);
+    flex: 0 0 calc((100vw - 48px) / 3); /* 3 items minus padding/gaps */
     display: flex;
     justify-content: center;
   }
 
-  /* Images scale nicely */
-  .gallery-row img {
-    width: 100%;
+  .gallery-row a img {
     height: auto;
-    border-radius: 4px;
+    width: 100%;
     object-fit: cover;
   }
 
-  /* Hide scrollbars */
+  /* hide scrollbar on mobile */
   .gallery-row::-webkit-scrollbar {
     display: none;
   }
 }
+
 
