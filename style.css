@@ -1,82 +1,90 @@
-/* ========= BASE RESET ========= */
+/* =========================
+   BASE / RESET
+   ========================= */
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow: hidden; /* no vertical scroll */
 }
 
-/* ========= BACKGROUND ========= */
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  background-image: url("bg_01.jpg"); /* your bg image */
+  color: #111;
+
+  /* your background image */
+  background-image: url("bg_01.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: #111;
 }
 
-/* ========= TOP BAR (name + menu) ========= */
-.top-bar {
+/* =========================
+   TOP BAR (DESKTOP)
+   ========================= */
+.top-bar{
   position: fixed;
   top: 16px;
   left: 24px;
   right: 24px;
-  z-index: 20;
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  align-items: flex-start; /* same top edge */
+  gap: 16px;
+  z-index: 30;
 }
 
-/* name */
-.top-corner-title a {
-  text-decoration: none;
-  color: #111;
-  font-size: 14px;
-  letter-spacing: 0.12em;
+.top-corner-title{
+  font-size: 12px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* menu */
-.header .links {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
-.header .links a {
-  font-size: 12px;
+.top-corner-title a{
   text-decoration: none;
   color: #111;
+}
+
+.header .links{
+  display: flex;
+  gap: 16px;
+  flex-wrap: nowrap;
   white-space: nowrap;
 }
 
-.header .links a:hover {
-  opacity: 0.6;
+.header .links a{
+  font-size: 12px;
+  text-decoration: none;
+  color: #111;
 }
 
-/* ========= RED SQUARE ========= */
-.red-square {
+.header .links a:hover{ opacity: 0.6; }
+
+/* =========================
+   RED EMBLEM (DESKTOP)
+   ========================= */
+.red-square{
   position: fixed;
-  top: 60px;        /* under the name */
+  top: 60px;     /* below the top-bar */
   left: 24px;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   background: #ff0033;
-  z-index: 10;
+  z-index: 25;
   cursor: pointer;
+  transition: opacity .2s ease;
 }
+.red-square:hover{ opacity: .9; }
 
-/* ========= MAIN / GALLERY ========= */
-.main-content {
+/* =========================
+   MAIN + GALLERY
+   ========================= */
+.main-content{
   height: 100vh;
   width: 100%;
   display: flex;
@@ -85,123 +93,133 @@ body {
   padding: 0 40px;
 }
 
-.gallery-frame {
+.gallery-frame{
   width: 100%;
   max-width: 1200px;
 }
 
-.gallery-row {
+.gallery-row{
   display: flex;
   gap: 16px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+
+  /* nice snapping feel (optional but recommended) */
+  scroll-snap-type: x mandatory;
 }
 
-/* very light scrollbar (desktop) */
-.gallery-row::-webkit-scrollbar {
-  height: 4px;
-}
-.gallery-row::-webkit-scrollbar-track {
-  background: transparent;
-}
-.gallery-row::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.08);
-  border-radius: 4px;
-}
-.gallery-row:hover::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
+.gallery-row a{
+  scroll-snap-align: center;
 }
 
-/* images */
-.gallery-row a img {
+/* light scrollbar */
+.gallery-row::-webkit-scrollbar{ height: 4px; }
+.gallery-row::-webkit-scrollbar-track{ background: transparent; }
+.gallery-row::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.10);
+  border-radius: 6px;
+}
+.gallery-row:hover::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.18);
+}
+
+/* Desktop tile size */
+.gallery-row a img{
   height: 260px;
   width: auto;
-  object-fit: cover;
   display: block;
+  object-fit: cover;
 }
 
-/* footer */
-.footer {
+/* Footer */
+.footer{
   position: fixed;
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 10px;
-  z-index: 20;
+  z-index: 30;
 }
-.footer a {
-  text-decoration: none;
-  color: #111;
-}
+.footer a{ text-decoration: none; color: #111; }
 
-/* ========= MOBILE (≤ 768px) ========= */
-@media (max-width: 768px) {
+/* =========================
+   MOBILE FIXES (≤ 768px)
+   - stack header
+   - shrink emblem
+   - make images bigger
+   - keep NO vertical scrolling
+   ========================= */
+@media (max-width: 768px){
 
-  html, body {
-    height: 100vh;
-    overflow: hidden;            /* no vertical scroll */
-  }
-
-  .top-bar {
-    top: 12px;
+  /* Stack the header so it never overlaps */
+  .top-bar{
+    top: 14px;
     left: 16px;
     right: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
   }
 
-  .top-corner-title a {
-    font-size: 13px;
-  }
-
-  .header .links {
-    gap: 12px;
-  }
-
-  .red-square {
-    top: 60px;
-    left: 32px;
-    width: 90px;
-    height: 90px;
-  }
-
-  .main-content {
-    height: calc(100vh - 120px); /* leave room for header + footer */
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .gallery-frame {
+  /* Menu becomes a horizontal row that can scroll if needed */
+  .header{
     width: 100%;
   }
 
-  .gallery-row {
+  .header .links{
     width: 100%;
-    padding: 0 16px;
-    gap: 12px;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-bottom: 6px;
   }
 
-  /* each item = 1/3 of screen width */
-  .gallery-row a {
-    flex: 0 0 calc(33.33% - 12px);
-    display: flex;
-    justify-content: center;
+  /* hide the menu scrollbar on mobile */
+  .header .links::-webkit-scrollbar{ display: none; }
+  .header .links{ scrollbar-width: none; }
+
+  /* Make the red square smaller so it doesn't compress anything */
+  .red-square{
+    top: 78px;     /* below stacked header */
+    left: 16px;
+    width: 46px;
+    height: 46px;
   }
 
-  .gallery-row a img {
+  /* Center the gallery on screen and make tiles larger */
+  .main-content{
+    padding: 0; /* full bleed */
+  }
+
+  .gallery-frame{
+    max-width: 100%;
+  }
+
+  .gallery-row{
+    padding: 0 16px 10px 16px;
+    gap: 14px;
+  }
+
+  /* 3 items can “fit the screen” as a layout target,
+     but still allow swipe. This makes them BIGGER. */
+  .gallery-row a{
+    flex: 0 0 calc((100vw - 16px - 16px - (14px * 2)) / 3);
+  }
+
+  .gallery-row a img{
     width: 100%;
-    height: auto;
-    max-height: none;
+    height: 180px;  /* bigger than your current mobile look */
+    object-fit: cover;
   }
 
-  .gallery-row::-webkit-scrollbar {
-    display: none; /* hide bar on mobile */
-  }
-
-  .footer {
-    font-size: 11px;
+  .footer{
+    bottom: 12px;
+    font-size: 10px;
   }
 }
