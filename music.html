@@ -3,81 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music – marcoalexismaria</title>
-
-  <!-- Global styles (same as index/photos) -->
-  <link rel="stylesheet" href="style.css" />
+  <title>Events – marcoalexismaria</title>
 
   <style>
-    /* Music page base */
-    body{
-      background: #faf9f6; /* keeps it clean */
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #faf9f6;
+      color: #111;
     }
 
-    /* Use the same stage/rail system as index, but allow bigger “cards” */
-    .stage{
-      padding: 96px 24px 64px 24px; /* room for topbar + footer */
+    /* ===== TOP BAR (same vibe as your “good” pages) ===== */
+    .top-left {
+      position: fixed;
+      top: 16px;
+      left: 24px;
+      z-index: 1000;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      line-height: 1;
+      white-space: nowrap;
     }
-
-    /* Make album cards slightly bigger than index thumbnails */
-    .rail{
-      width: min(1100px, 100%);
-      scroll-snap-type: x mandatory;
+    .top-left a {
+      color: inherit;
+      text-decoration: none;
     }
+    .top-left a:hover { opacity: 0.6; }
 
-    .album-card{
-      flex: 0 0 auto;
-      scroll-snap-align: center;
+    .top-right {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      z-index: 1000;
+    }
+    .top-right .links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: baseline;
+    }
+    .top-right .links a {
+      font-size: 12px;
+      letter-spacing: 0.06em;
       text-decoration: none;
       color: inherit;
-      display: block;
+      white-space: nowrap;
+      line-height: 1;
+      text-transform: capitalize;
+    }
+    .top-right .links a:hover { opacity: 0.6; }
+
+    /* ===== MAIN ===== */
+    main {
+      /* clears the fixed header so nothing is covered */
+      padding: 92px 24px 56px;
+      display: flex;
+      justify-content: center;
     }
 
-    .album-card img{
-      width: 320px;
-      height: 320px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.16);
-      display: block;
-      transition: transform .18s ease, opacity .18s ease;
-    }
-
-    .album-card:hover img{
-      transform: translateY(-2px);
-      opacity: .96;
-    }
-
-    .album-title{
-      display: block;
-      margin-top: 12px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .wrap {
+      width: 100%;
+      max-width: 920px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      align-items: center;
       text-align: center;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       opacity: 0.85;
     }
 
-    /* Mobile: big swipeable covers, not cramped */
-    @media (max-width: 768px){
-      .stage{
-        padding: 112px 12px 62px 12px; /* header becomes taller on small screens */
+    /* ===== EVENT CARD ===== */
+    .event {
+      width: 100%;
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
+
+    .event a {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .event img {
+      width: min(92vw, 820px);
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+      transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+      display: block;
+    }
+
+    .event img:hover {
+      transform: translateY(-2px);
+      opacity: 0.98;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.16);
+    }
+
+    .event .meta {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.75;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .top-left {
+        left: 16px;
+        top: 16px;
+        font-size: 11px;
       }
 
-      .rail{
-        gap: 14px;
-        padding: 10px 12px 14px 12px;
+      .top-right {
+        right: 16px;
+        top: 16px;
       }
 
-      .album-card{
-        flex: 0 0 82vw; /* big cards */
+      .top-right .links {
+        gap: 10px 12px;
       }
 
-      .album-card img{
-        width: 100%;
-        height: 82vw;       /* square */
-        max-height: 380px;
-        border-radius: 12px;
+      .top-right .links a {
+        font-size: 11px;
+      }
+
+      main {
+        padding: 92px 16px 44px;
+      }
+
+      .event img {
+        width: 92vw;
+        border-radius: 10px;
       }
     }
   </style>
@@ -85,58 +155,46 @@
 
 <body>
 
-  <!-- TOP BAR (exactly like index, uses style.css) -->
-  <header class="topbar">
-    <div class="brand">
-      <a class="brand-name" href="index.html">marcoalexismaria</a>
-      <!-- keep emblem consistent with index; optional for music page -->
-      <button class="emblem" type="button" aria-label="Emblem"></button>
-    </div>
+  <!-- top-left name -->
+  <div class="top-left">
+    <a href="index.html">marcoalexismaria</a>
+  </div>
 
-    <nav class="nav" aria-label="Site">
+  <!-- top-right menu -->
+  <div class="top-right">
+    <div class="links">
       <a href="videos.html">Videos</a>
       <a href="music.html">Music</a>
       <a href="photos.html">Photographs</a>
       <a href="events.html">Events</a>
       <a href="background.html">About</a>
-    </nav>
-  </header>
+    </div>
+  </div>
 
-  <!-- MAIN -->
-  <main class="stage">
-    <section class="rail" aria-label="Music releases">
+  <!-- content -->
+  <main>
+    <div class="wrap">
+      <h1 class="title">Events</h1>
 
-      <!-- TAPED -->
-      <a class="album-card"
-         href="https://soundcloud.com/marco-maria-638714703/sets/taped"
-         target="_blank" rel="noopener">
-        <img src="cover/taped_cover.jpg" alt="TAPED cover" loading="lazy">
-        <span class="album-title">TAPED</span>
-      </a>
+      <!-- Event 1 -->
+      <div class="event">
+        <a href="https://partiful.com/e/SpXwA0RUBUlNDnfP1Hc8" target="_blank" rel="noopener">
+          <img src="flyer/event1.jpg" alt="Event flyer">
+        </a>
+        <p class="meta"></p>
+      </div>
 
-      <!-- EMP -->
-      <a class="album-card"
-         href="https://soundcloud.com/prince-marco-278939286/sets/emp"
-         target="_blank" rel="noopener">
-        <img src="cover/emp_cover.jpg" alt="EMP cover" loading="lazy">
-        <span class="album-title">EMP</span>
-      </a>
+      <!-- Copy/paste more events here
+      <div class="event">
+        <a href="EVENT_LINK" target="_blank" rel="noopener">
+          <img src="flyer/event2.jpg" alt="Event flyer">
+        </a>
+        <p class="meta">Optional date / location</p>
+      </div>
+      -->
 
-      <!-- ANG3L -->
-      <a class="album-card"
-         href="https://soundcloud.com/prince-marco-278939286/ang3l"
-         target="_blank" rel="noopener">
-        <img src="cover/ang3l_cover.jpg" alt="ANG3L cover" loading="lazy">
-        <span class="album-title">ANG3L</span>
-      </a>
-
-    </section>
+    </div>
   </main>
-
-  <!-- FOOTER (same as site) -->
-  <footer class="foot">
-    <a href="secret.html">© 3^07</a>
-  </footer>
 
 </body>
 </html>
