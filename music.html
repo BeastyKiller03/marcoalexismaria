@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music – Marco Maria</title>
+  <title>Music – marcoalexismaria</title>
 
   <!-- Global styles (same as index / photos) -->
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* Page base */
+    * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -17,9 +18,10 @@
       background: #faf9f6;
       color: #111;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden; /* keeps it clean like your other pages */
     }
 
-    /* ===== TOP BAR (same as index / photos) ===== */
+    /* ===== TOP BAR ===== */
     .top-bar {
       position: fixed;
       top: 16px;
@@ -28,6 +30,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
       z-index: 1000;
     }
 
@@ -35,6 +38,7 @@
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .top-corner-title a {
@@ -46,6 +50,7 @@
       display: flex;
       gap: 16px;
       align-items: center;
+      white-space: nowrap;
     }
 
     .header .links a {
@@ -54,19 +59,18 @@
       color: inherit;
     }
 
-    .header .links a:hover {
-      opacity: 0.6;
-    }
+    .header .links a:hover { opacity: 0.6; }
 
-    /* ===== MAIN CONTENT ===== */
+    /* ===== MAIN ===== */
     .music-wrapper {
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-top: 64px; /* space for top bar */
+      padding: 90px 24px 40px; /* space for top-bar */
     }
 
+    /* Desktop layout: 3-up centered */
     .album-row {
       display: flex;
       gap: 32px;
@@ -75,18 +79,18 @@
     }
 
     .album {
-      display: block;
       text-decoration: none;
       color: inherit;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      display: block;
+      transition: transform 0.18s ease, opacity 0.18s ease;
     }
 
     .album img {
       width: 260px;
       height: 260px;
       object-fit: cover;
-      border-radius: 6px;
-      box-shadow: 0 0 14px rgba(0,0,0,0.18);
+      border-radius: 8px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.14);
       display: block;
     }
 
@@ -101,28 +105,77 @@
     }
 
     .album:hover {
-      transform: scale(1.04);
-      opacity: 0.95;
+      transform: translateY(-2px);
+      opacity: 0.96;
     }
 
-    /* ===== MOBILE ===== */
+    /* ===== MOBILE: NOT COMPRESSED ===== */
     @media (max-width: 768px) {
-      .album-row {
-        flex-direction: column;
-        gap: 24px;
+
+      html, body {
+        overflow: hidden;
       }
 
-      .album img {
-        width: 70vw;
-        height: 70vw;
-      }
-
-      .header .links {
+      .top-bar {
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        flex-direction: column;          /* stack name + menu */
+        align-items: flex-start;
         gap: 10px;
       }
 
-      .header .links a {
-        font-size: 11px;
+      /* menu becomes scrollable row */
+      .header {
+        width: 100%;
+      }
+
+      .header .links {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 14px;
+        padding-bottom: 6px;
+      }
+
+      .header .links::-webkit-scrollbar { display: none; }
+      .header .links { scrollbar-width: none; }
+
+      /* main area sits under stacked header */
+      .music-wrapper {
+        padding: 120px 0 30px; /* more top space */
+        justify-content: center;
+      }
+
+      /* albums become a swipeable carousel (big covers) */
+      .album-row {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        gap: 14px;
+        padding: 0 14px 12px;
+        justify-content: flex-start;
+      }
+
+      .album-row::-webkit-scrollbar { display: none; }
+
+      .album {
+        flex: 0 0 82vw;               /* BIG */
+        scroll-snap-align: center;
+      }
+
+      .album img {
+        width: 100%;
+        height: 82vw;                 /* square cover */
+        max-height: 360px;
+        border-radius: 10px;
+      }
+
+      .album span {
+        font-size: 12px;
+        margin-top: 12px;
       }
     }
   </style>
@@ -152,20 +205,26 @@
     <div class="album-row">
 
       <!-- TAPED -->
-      <a class="album" href="https://soundcloud.com/marco-maria-638714703/sets/taped"_blank" rel="noopener">
-        <img src="cover/taped_cover.jpg" alt="TAPED cover">
+      <a class="album"
+         href="https://soundcloud.com/marco-maria-638714703/sets/taped"
+         target="_blank" rel="noopener">
+        <img src="cover/taped_cover.jpg" alt="TAPED cover" loading="lazy">
         <span>TAPED</span>
       </a>
 
       <!-- EMP -->
-      <a class="album" href="https://soundcloud.com/prince-marco-278939286/sets/emp" rel="noopener">
-        <img src="cover/emp_cover.jpg" alt="EMP cover">
+      <a class="album"
+         href="https://soundcloud.com/prince-marco-278939286/sets/emp"
+         target="_blank" rel="noopener">
+        <img src="cover/emp_cover.jpg" alt="EMP cover" loading="lazy">
         <span>EMP</span>
       </a>
 
-      <!-- ANG3L (single) -->
-      <a class="album" href="https://soundcloud.com/prince-marco-278939286/ang3l"_blank" rel="noopener">
-        <img src="cover/ang3l_cover.jpg" alt="ANG3L cover">
+      <!-- ANG3L -->
+      <a class="album"
+         href="https://soundcloud.com/prince-marco-278939286/ang3l"
+         target="_blank" rel="noopener">
+        <img src="cover/ang3l_cover.jpg" alt="ANG3L cover" loading="lazy">
         <span>ANG3L</span>
       </a>
 
@@ -174,4 +233,3 @@
 
 </body>
 </html>
-
