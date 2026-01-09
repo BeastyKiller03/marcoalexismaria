@@ -5,167 +5,230 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photos - Marco Maria</title>
 
-  <!-- Global styles (same file used by index) -->
+  <!-- Uses the same global CSS as index -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Page-specific styles (ONLY viewer stuff, no menu overrides) -->
   <style>
-    /* Make photos page background soft white */
-    body {
-      background: #faf9f6;
-      color: #000;
+    /* Page base */
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;          /* no scroll, we use arrows */
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden; /* no scroll */
+      background: #faf9f6;
+      color: #111;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     }
 
-    /* Make the name link look like the index title */
-    .top-corner-title a {
+    /* ===== TOP BAR (matches index layout) ===== */
+    .top-bar{
+      position: fixed;
+      top: 16px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      pointer-events: none; /* so the viewer can still be clicked */
+    }
+
+    .top-bar a { pointer-events: auto; } /* re-enable clicks for links */
+
+    .top-corner-title{
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .top-corner-title a{
       text-decoration: none;
       color: inherit;
     }
 
-    /* MAIN VIEWER */
-    .viewer {
+    /* Menu styling (keeps your .header/.links structure but prevents weird shifts) */
+    .header .links{
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+    }
+
+    .header .links a{
+      font-size: 12px;
+      text-decoration: none;
+      color: inherit;
+      line-height: 1;
+    }
+
+    .header .links a:hover{
+      opacity: 0.6;
+    }
+
+    /* ===== VIEWER ===== */
+    .viewer{
       position: relative;
       height: 100vh;
       width: 100vw;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 80px;
+      display: grid;
+      place-items: center;
       background: #faf9f6;
+      padding: 72px 80px 40px; /* top padding accounts for fixed top-bar */
       overflow: hidden;
     }
 
-    .viewer img {
-      max-width: calc(100vw - 260px);   /* leave space for menu + arrows */
-      max-height: 80vh;
+    .viewer img{
+      max-width: min(calc(100vw - 160px), 1200px);
+      max-height: min(calc(100vh - 140px), 82vh);
       object-fit: contain;
       display: block;
-      box-shadow: 0 0 12px rgba(0,0,0,0.18);
       border-radius: 4px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.14);
     }
 
-    /* LEFT + RIGHT ARROWS */
-    .nav-arrow {
+    /* ===== CLEAN ARROWS ===== */
+    .nav-arrow{
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      border: none;
-      background: none;
-      font-size: 2rem;
-      line-height: 1;
-      padding: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: grid;
+      place-items: center;
       cursor: pointer;
-      opacity: 0.35;
-      transition: opacity 0.2s ease;
-      user-select: none;
+      transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease;
+      opacity: 0.6;
       z-index: 900;
+      padding: 0;
     }
 
-    .nav-arrow:hover {
-      opacity: 0.8;
+    .nav-arrow:hover{
+      opacity: 1;
+      background: rgba(255,255,255,0.75);
+      transform: translateY(-50%) scale(1.03);
     }
 
-    .nav-arrow.left {
-      left: 40px;
+    .nav-arrow:active{
+      transform: translateY(-50%) scale(0.98);
     }
 
-    .nav-arrow.right {
-      right: 40px;
-    }
-
-    .nav-arrow span {
+    .nav-arrow svg{
+      width: 18px;
+      height: 18px;
       display: block;
     }
 
-    /* Hidden source images (for JS + deep links) */
-    .gallery {
-      display: none;
-    }
+    .nav-arrow.left{ left: 24px; }
+    .nav-arrow.right{ right: 24px; }
 
-    /* --- Mobile tweaks --- */
-    @media (max-width: 768px) {
-      body {
-        overflow: hidden;
+    /* Hide source list */
+    .gallery{ display: none; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px){
+      .top-bar{
+        top: 14px;
+        left: 14px;
+        right: 14px;
       }
 
-      .viewer {
-        padding: 0 40px;
+      .header .links{
+        gap: 10px;
+        flex-wrap: wrap;           /* if needed, wraps instead of colliding */
+        justify-content: flex-end;
       }
 
-      .viewer img {
-        max-width: calc(100vw - 120px);
-        max-height: 70vh;
-      }
-
-      /* If your style.css already shrinks menu text, this just keeps it from cramming */
-      .header .links a {
+      .header .links a{
         font-size: 11px;
-        margin-left: 10px;
       }
+
+      .viewer{
+        padding: 86px 18px 22px;   /* more top space so wrapped menu doesn't overlap photo */
+      }
+
+      .viewer img{
+        max-width: 92vw;
+        max-height: 72vh;
+      }
+
+      .nav-arrow{
+        width: 40px;
+        height: 40px;
+      }
+
+      .nav-arrow.left{ left: 10px; }
+      .nav-arrow.right{ right: 10px; }
     }
   </style>
 </head>
+
 <body>
-  <!-- Top-left name (clicks back to index) -->
-  <div class="top-corner-title">
-    <a href="index.html">Marco Maria</a>
-  </div>
-
-  <!-- Top-right menu – EXACT SAME STRUCTURE AS INDEX -->
-  <div class="header">
-    <div class="links">
-<a href="videos.html">Videos</a>
-<a href="music.html">Music</a>
-<a href="photos.html">Photographs</a>
-<a href="events.html">Events</a>
-<a href="background.html">About</a>
+  <!-- TOP BAR: name + menu (same layout concept as index) -->
+  <header class="top-bar">
+    <div class="top-corner-title">
+      <a href="index.html">Marco Maria</a>
     </div>
-  </div>
 
-  <!-- Single big centered photo with arrows -->
+    <div class="header">
+      <div class="links">
+        <a href="videos.html">Videos</a>
+        <a href="music.html">Music</a>
+        <a href="photos.html">Photographs</a>
+        <a href="events.html">Events</a>
+        <a href="background.html">About</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Viewer -->
   <div class="viewer">
     <button class="nav-arrow left" aria-label="Previous photo">
-      <span>&#10094;</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
     </button>
 
     <img id="current-photo" src="IMG_1.jpg" alt="">
 
     <button class="nav-arrow right" aria-label="Next photo">
-      <span>&#10095;</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
     </button>
   </div>
 
-  <!-- Hidden images used as source list + deep-link IDs -->
+  <!-- Hidden source list -->
   <div class="gallery">
-    <img id="img1"  src="IMG_1.jpg"  alt="Image 1"  loading="lazy">
-    <img id="img2"  src="IMG_2.jpg"  alt="Image 2"  loading="lazy">
-    <img id="img3"  src="IMG_3.jpg"  alt="Image 3"  loading="lazy">
-    <img id="img4"  src="IMG_4.jpg"  alt="Image 4"  loading="lazy">
-    <img id="img5"  src="IMG_5.jpg"  alt="Image 5"  loading="lazy">
-    <img id="img6"  src="IMG_6.jpg"  alt="Image 6"  loading="lazy">
-    <img id="img7"  src="IMG_7.jpg"  alt="Image 7"  loading="lazy">
-    <img id="img8"  src="IMG_8.jpg"  alt="Image 8"  loading="lazy">
-    <img id="img9"  src="IMG_9.jpg"  alt="Image 9"  loading="lazy">
-    <img id="img10" src="IMG_10.jpg" alt="Image 10" loading="lazy">
-    <img id="img11" src="IMG_11.jpg" alt="Image 11" loading="lazy">
-    <img id="img12" src="IMG_12.jpg" alt="Image 12" loading="lazy">
-    <img id="img13" src="IMG_13.jpg" alt="Image 13" loading="lazy">
-    <img id="img14" src="IMG_14.jpg" alt="Image 14" loading="lazy">
-    <img id="img15" src="IMG_15.jpg" alt="Image 15" loading="lazy">
-    <img id="img16" src="IMG_16.jpg" alt="Image 16" loading="lazy">
+    <img id="img1"  src="photos/IMG_1.jpg"  alt="Image 1"  loading="lazy">
+    <img id="img2"  src="photos/IMG_2.jpg"  alt="Image 2"  loading="lazy">
+    <img id="img3"  src="photos/IMG_3.jpg"  alt="Image 3"  loading="lazy">
+    <img id="img4"  src="photos/IMG_4.jpg"  alt="Image 4"  loading="lazy">
+    <img id="img5"  src="photos/IMG_5.jpg"  alt="Image 5"  loading="lazy">
+    <img id="img6"  src="photos/IMG_6.jpg"  alt="Image 6"  loading="lazy">
+    <img id="img7"  src="photos/IMG_7.jpg"  alt="Image 7"  loading="lazy">
+    <img id="img8"  src="photos/IMG_8.jpg"  alt="Image 8"  loading="lazy">
+    <img id="img9"  src="photos/IMG_9.jpg"  alt="Image 9"  loading="lazy">
+    <img id="img10" src="photos/IMG_10.jpg" alt="Image 10" loading="lazy">
+    <img id="img11" src="photos/IMG_11.jpg" alt="Image 11" loading="lazy">
+    <img id="img12" src="photos/IMG_12.jpg" alt="Image 12" loading="lazy">
+    <img id="img13" src="photos/IMG_13.jpg" alt="Image 13" loading="lazy">
+    <img id="img14" src="photos/IMG_14.jpg" alt="Image 14" loading="lazy">
+    <img id="img15" src="photos/IMG_15.jpg" alt="Image 15" loading="lazy">
+    <img id="img16" src="photos/IMG_16.jpg" alt="Image 16" loading="lazy">
   </div>
 
   <script>
-    const imageNodes = Array.from(document.querySelectorAll('.gallery img'));
-    const displayImg = document.getElementById('current-photo');
-    const btnPrev = document.querySelector('.nav-arrow.left');
-    const btnNext = document.querySelector('.nav-arrow.right');
-
+    const imageNodes = Array.from(document.querySelectorAll(".gallery img"));
+    const displayImg = document.getElementById("current-photo");
+    const btnPrev = document.querySelector(".nav-arrow.left");
+    const btnNext = document.querySelector(".nav-arrow.right");
     let currentIndex = 0;
 
     function showImage(index) {
@@ -180,39 +243,31 @@
       displayImg.src = srcImg.src;
       displayImg.alt = srcImg.alt || "";
 
-      if (srcImg.id) {
-        history.replaceState(null, "", "#" + srcImg.id);
-      }
+      if (srcImg.id) history.replaceState(null, "", "#" + srcImg.id);
     }
 
     function initFromHash() {
       const hash = window.location.hash.replace("#", "");
-      if (!hash) {
-        showImage(0);
-        return;
-      }
+      if (!hash) return showImage(0);
+
       const idx = imageNodes.findIndex(img => img.id === hash);
-      if (idx >= 0) {
-        showImage(idx);
-      } else {
-        showImage(0);
-      }
+      showImage(idx >= 0 ? idx : 0);
     }
 
-    btnPrev.addEventListener('click', () => showImage(currentIndex - 1));
-    btnNext.addEventListener('click', () => showImage(currentIndex + 1));
+    btnPrev.addEventListener("click", () => showImage(currentIndex - 1));
+    btnNext.addEventListener("click", () => showImage(currentIndex + 1));
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        showImage(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        showImage(currentIndex + 1);
-      }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+      if (e.key === "ArrowRight") showImage(currentIndex + 1);
     });
 
-    window.addEventListener('load', initFromHash);
-    window.addEventListener('hashchange', initFromHash);
+    window.addEventListener("load", initFromHash);
+    window.addEventListener("hashchange", initFromHash);
   </script>
 </body>
 </html>
+
+
+
 
