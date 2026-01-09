@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events – marcoalexismaria</title>
+  <title>Music – marcoalexismaria</title>
+
+  <!-- Keep your global stylesheet for font consistency if you want -->
+  <link rel="stylesheet" href="style.css" />
 
   <style>
     * { box-sizing: border-box; }
@@ -11,187 +14,231 @@
     html, body {
       margin: 0;
       padding: 0;
-      min-height: 100%;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      height: 100%;
       background: #faf9f6;
       color: #111;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden; /* no vertical scroll */
     }
 
-    /* ===== TOP BAR (same vibe as your “good” pages) ===== */
-    .top-left {
+    /* IMPORTANT: disable index veil + bg image on this page */
+    body::before { display: none !important; }
+    body { background-image: none !important; }
+
+    /* ===== TOP BAR (same layout as your “good” pages) ===== */
+    .top-bar{
       position: fixed;
       top: 16px;
       left: 24px;
-      z-index: 1000;
-      font-size: 12px;
-      letter-spacing: 0.10em;
-      text-transform: lowercase;
-      line-height: 1;
-      white-space: nowrap;
-    }
-    .top-left a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .top-left a:hover { opacity: 0.6; }
-
-    .top-right {
-      position: fixed;
-      top: 16px;
       right: 24px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
       z-index: 1000;
     }
-    .top-right .links {
+
+    .top-corner-title{
+      font-size: 11px;              /* slightly smaller like your reference */
+      letter-spacing: 0.10em;
+      text-transform: lowercase;     /* matches your “marcoalexismaria” vibe */
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .top-corner-title a{
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .top-corner-title a:hover{ opacity: .6; }
+
+    .header .links{
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
       justify-content: flex-end;
       align-items: baseline;
     }
-    .top-right .links a {
+
+    .header .links a{
       font-size: 12px;
-      letter-spacing: 0.06em;
       text-decoration: none;
       color: inherit;
       white-space: nowrap;
       line-height: 1;
-      text-transform: capitalize;
     }
-    .top-right .links a:hover { opacity: 0.6; }
+    .header .links a:hover{ opacity: .6; }
 
     /* ===== MAIN ===== */
-    main {
-      /* clears the fixed header so nothing is covered */
-      padding: 92px 24px 56px;
+    .music-wrapper{
+      height: 100vh;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 92px 24px 56px; /* clears fixed header */
+    }
+
+    /* Desktop: 3-up centered */
+    .album-row{
+      display: flex;
+      gap: 32px;
+      align-items: center;
       justify-content: center;
     }
 
-    .wrap {
-      width: 100%;
-      max-width: 920px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      align-items: center;
-      text-align: center;
-    }
-
-    .title {
-      margin: 0;
-      font-size: 12px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      opacity: 0.85;
-    }
-
-    /* ===== EVENT CARD ===== */
-    .event {
-      width: 100%;
-      display: grid;
-      gap: 12px;
-      justify-items: center;
-    }
-
-    .event a {
-      display: inline-block;
+    .album{
       text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform .18s ease, opacity .18s ease;
     }
 
-    .event img {
-      width: min(92vw, 820px);
-      height: auto;
+    .album img{
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 14px 28px rgba(0,0,0,0.12);
-      transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.14);
       display: block;
     }
 
-    .event img:hover {
+    .album span{
+      display: block;
+      margin-top: 12px;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      text-align: center;
+      opacity: .8;
+    }
+
+    .album:hover{
       transform: translateY(-2px);
-      opacity: 0.98;
-      box-shadow: 0 18px 38px rgba(0,0,0,0.16);
+      opacity: .96;
     }
 
-    .event .meta {
-      margin: 0;
-      font-size: 13px;
-      opacity: 0.75;
-      letter-spacing: 0.02em;
-    }
+    /* ===== MOBILE: clean + roomy (not compressed) ===== */
+    @media (max-width: 768px){
 
-    /* ===== MOBILE ===== */
-    @media (max-width: 768px) {
-      .top-left {
+      .top-bar{
+        top: 14px;
         left: 16px;
-        top: 16px;
-        font-size: 11px;
-      }
-
-      .top-right {
         right: 16px;
-        top: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
 
-      .top-right .links {
-        gap: 10px 12px;
+      .top-corner-title{
+        font-size: 10px;  /* smaller like your screenshot */
       }
 
-      .top-right .links a {
-        font-size: 11px;
+      /* menu row becomes horizontally scrollable (so it never squishes) */
+      .header{
+        width: 100%;
       }
 
-      main {
-        padding: 92px 16px 44px;
+      .header .links{
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 14px;
+        padding-bottom: 6px;
+      }
+      .header .links::-webkit-scrollbar{ display: none; }
+      .header .links{ scrollbar-width: none; }
+
+      /* content sits below stacked header */
+      .music-wrapper{
+        padding: 122px 0 44px;
+        align-items: center;
       }
 
-      .event img {
-        width: 92vw;
-        border-radius: 10px;
+      /* swipeable big covers */
+      .album-row{
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        gap: 14px;
+        padding: 0 16px 14px;
+        justify-content: flex-start;
       }
+      .album-row::-webkit-scrollbar{ display: none; }
+
+      .album{
+        flex: 0 0 84vw;           /* big and roomy */
+        scroll-snap-align: center;
+      }
+
+      .album img{
+        width: 100%;
+        height: 84vw;
+        max-height: 380px;
+        border-radius: 12px;
+      }
+
+      .album span{
+        margin-top: 14px;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+      }
+    }
+
+    /* tiny phones: give more top space */
+    @media (max-width: 420px){
+      .music-wrapper{ padding-top: 132px; }
+      .album{ flex-basis: 88vw; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- top-left name -->
-  <div class="top-left">
-    <a href="index.html">marcoalexismaria</a>
-  </div>
-
-  <!-- top-right menu -->
-  <div class="top-right">
-    <div class="links">
-      <a href="videos.html">Videos</a>
-      <a href="music.html">Music</a>
-      <a href="photos.html">Photographs</a>
-      <a href="events.html">Events</a>
-      <a href="background.html">About</a>
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-corner-title">
+      <a href="index.html">marcoalexismaria</a>
     </div>
-  </div>
 
-  <!-- content -->
-  <main>
-    <div class="wrap">
-      <h1 class="title">Events</h1>
-
-      <!-- Event 1 -->
-      <div class="event">
-        <a href="https://partiful.com/e/SpXwA0RUBUlNDnfP1Hc8" target="_blank" rel="noopener">
-          <img src="flyer/event1.jpg" alt="Event flyer">
-        </a>
-        <p class="meta"></p>
+    <div class="header">
+      <div class="links">
+        <a href="videos.html">Videos</a>
+        <a href="music.html">Music</a>
+        <a href="photos.html">Photographs</a>
+        <a href="events.html">Events</a>
+        <a href="background.html">About</a>
       </div>
+    </div>
+  </header>
 
-      <!-- Copy/paste more events here
-      <div class="event">
-        <a href="EVENT_LINK" target="_blank" rel="noopener">
-          <img src="flyer/event2.jpg" alt="Event flyer">
-        </a>
-        <p class="meta">Optional date / location</p>
-      </div>
-      -->
+  <!-- MAIN -->
+  <main class="music-wrapper">
+    <div class="album-row">
+
+      <a class="album"
+         href="https://soundcloud.com/marco-maria-638714703/sets/taped"
+         target="_blank" rel="noopener">
+        <img src="cover/taped_cover.jpg" alt="TAPED cover" loading="lazy">
+        <span>TAPED</span>
+      </a>
+
+      <a class="album"
+         href="https://soundcloud.com/prince-marco-278939286/sets/emp"
+         target="_blank" rel="noopener">
+        <img src="cover/emp_cover.jpg" alt="EMP cover" loading="lazy">
+        <span>EMP</span>
+      </a>
+
+      <a class="album"
+         href="https://soundcloud.com/prince-marco-278939286/ang3l"
+         target="_blank" rel="noopener">
+        <img src="cover/ang3l_cover.jpg" alt="ANG3L cover" loading="lazy">
+        <span>ANG3L</span>
+      </a>
 
     </div>
   </main>
