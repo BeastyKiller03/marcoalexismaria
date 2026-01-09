@@ -3,54 +3,175 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music Links</title>
+  <title>Music – Marco Maria</title>
+
+  <!-- Global styles (same as index / photos) -->
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    body {
+    /* Page base */
+    html, body {
       margin: 0;
       padding: 0;
-      height: 100vh;
-      background-color: white;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      height: 100%;
+      background: #faf9f6;
+      color: #111;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* ===== TOP BAR (same as index / photos) ===== */
+    .top-bar {
+      position: fixed;
+      top: 16px;
+      left: 24px;
+      right: 24px;
       display: flex;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .top-corner-title {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .top-corner-title a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header .links {
+      display: flex;
+      gap: 16px;
       align-items: center;
     }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      text-align: center;
-    }
-
-    a {
+    .header .links a {
+      font-size: 12px;
       text-decoration: none;
-      font-size: 1.5rem;
-      font-weight: bold;
+      color: inherit;
     }
 
-    .apple {
-      color: red;
+    .header .links a:hover {
+      opacity: 0.6;
     }
 
-    .spotify {
-      color: green;
+    /* ===== MAIN CONTENT ===== */
+    .music-wrapper {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 64px; /* space for top bar */
     }
 
-    .soundcloud {
-      color: orange;
+    .album-row {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      justify-content: center;
     }
 
-    a:hover {
-      opacity: 0.75;
+    .album {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .album img {
+      width: 260px;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 0 14px rgba(0,0,0,0.18);
+      display: block;
+    }
+
+    .album span {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .album:hover {
+      transform: scale(1.04);
+      opacity: 0.95;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .album-row {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .album img {
+        width: 70vw;
+        height: 70vw;
+      }
+
+      .header .links {
+        gap: 10px;
+      }
+
+      .header .links a {
+        font-size: 11px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="links">
-    <a href="https://music.apple.com/us/artist/pm/1844409389" target="_blank" class="apple">Apple Music</a>
-    <a href="https://open.spotify.com/artist/5DOwFRSOw6uZY5imIVq9s8?si=jxJ0wxnJTlmf72rib6j__Q" target="_blank" class="spotify">Spotify</a>
-    <a href="https://soundcloud.com/prince-marco-278939286" target="_blank" class="soundcloud">SoundCloud</a>
-  </div>
+
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="top-corner-title">
+      <a href="index.html">Marco Maria</a>
+    </div>
+
+    <div class="header">
+      <div class="links">
+        <a href="videos.html">Videos</a>
+        <a href="music.html">Music</a>
+        <a href="photos.html">Photographs</a>
+        <a href="events.html">Events</a>
+        <a href="background.html">About</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="music-wrapper">
+    <div class="album-row">
+
+      <!-- TAPED -->
+      <a class="album" href="https://soundcloud.com/marco-maria-638714703/sets/taped"_blank" rel="noopener">
+        <img src="cover/taped_cover.jpg" alt="TAPED cover">
+        <span>TAPED</span>
+      </a>
+
+      <!-- EMP -->
+      <a class="album" href="https://soundcloud.com/prince-marco-278939286/sets/emp" rel="noopener">
+        <img src="cover/emp_cover.jpg" alt="EMP cover">
+        <span>EMP</span>
+      </a>
+
+      <!-- ANG3L (single) -->
+      <a class="album" href="https://soundcloud.com/prince-marco-278939286/ang3l"_blank" rel="noopener">
+        <img src="cover/ang3l_cover.jpg" alt="ANG3L cover">
+        <span>ANG3L</span>
+      </a>
+
+    </div>
+  </main>
+
 </body>
 </html>
+
