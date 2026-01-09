@@ -1,6 +1,6 @@
 /* =========================
    BASE / RESET
-   ========================= */
+========================= */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -9,217 +9,245 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* no vertical scroll */
+  overflow: hidden; /* lock page: no vertical scroll */
 }
 
-body {
+body{
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   color: #111;
 
-  /* your background image */
+  /* Background replaces white panel */
   background-image: url("bg_01.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* =========================
-   TOP BAR (DESKTOP)
-   ========================= */
-.top-bar{
+/* soft veil so text is readable over any bg */
+body::before{
+  content:"";
   position: fixed;
-  top: 16px;
-  left: 24px;
-  right: 24px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  z-index: 30;
+  inset: 0;
+  background: rgba(255,255,255,0.72);
+  pointer-events: none;
+  z-index: 0; /* IMPORTANT: sits behind everything */
 }
 
-.top-corner-title{
+/* ensure all main UI sits above veil */
+.topbar, .stage, .foot { position: relative; z-index: 1; }
+
+/* =========================
+   TOP BAR (DESKTOP/TABLET)
+========================= */
+.topbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  padding: calc(16px + env(safe-area-inset-top)) 24px 10px 24px;
+
+  display: grid;
+  grid-template-columns: auto 1fr; /* brand on left, nav on right */
+  align-items: start;
+  column-gap: 18px;
+
+  z-index: 20;
+}
+
+/* Brand block (name + emblem) */
+.brand{
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.brand-name{
   font-size: 12px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
+  text-decoration: none;
+  color: #111;
   white-space: nowrap;
 }
 
-.top-corner-title a{
-  text-decoration: none;
-  color: #111;
-}
-
-.header .links{
-  display: flex;
-  gap: 16px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
-
-.header .links a{
-  font-size: 12px;
-  text-decoration: none;
-  color: #111;
-}
-
-.header .links a:hover{ opacity: 0.6; }
-
-/* =========================
-   RED EMBLEM (DESKTOP)
-   ========================= */
-.red-square{
-  position: fixed;
-  top: 60px;     /* below the top-bar */
-  left: 24px;
-  width: 70px;
-  height: 70px;
+/* Red emblem square */
+.emblem{
+  width: 58px;
+  height: 58px;
+  border: 0;
   background: #ff0033;
-  z-index: 25;
   cursor: pointer;
-  transition: opacity .2s ease;
+  padding: 0;
+  border-radius: 0; /* keep it sharp like your reference */
+  box-shadow: 0 8px 18px rgba(0,0,0,0.10);
+  transition: transform .18s ease, opacity .18s ease;
 }
-.red-square:hover{ opacity: .9; }
+.emblem:hover{ opacity: .92; transform: translateY(-1px); }
+.emblem:active{ transform: translateY(0px) scale(.98); }
 
-/* =========================
-   MAIN + GALLERY
-   ========================= */
-.main-content{
-  height: 100vh;
-  width: 100%;
+/* Nav links */
+.nav{
+  justify-self: end;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 40px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+
+  /* Prevents overlap by keeping nav inside available space */
+  max-width: 100%;
 }
 
-.gallery-frame{
-  width: 100%;
-  max-width: 1200px;
+.nav a{
+  font-size: 12px;
+  text-decoration: none;
+  color: #111;
+  opacity: .92;
+  white-space: nowrap;
+}
+.nav a:hover{ opacity: .6; }
+
+/* =========================
+   STAGE / GALLERY STRIP
+========================= */
+.stage{
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+
+  /* room for fixed topbar + footer */
+  padding: 96px 24px 64px 24px;
 }
 
-.gallery-row{
+.rail{
+  width: min(1240px, 100%);
   display: flex;
   gap: 16px;
+
   overflow-x: auto;
   overflow-y: hidden;
+
   scroll-behavior: smooth;
-  padding-bottom: 10px;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
-
-  /* nice snapping feel (optional but recommended) */
   scroll-snap-type: x mandatory;
+
+  padding: 12px 8px 18px 8px;
+  -webkit-overflow-scrolling: touch;
 }
 
-.gallery-row a{
-  scroll-snap-align: center;
-}
-
-/* light scrollbar */
-.gallery-row::-webkit-scrollbar{ height: 4px; }
-.gallery-row::-webkit-scrollbar-track{ background: transparent; }
-.gallery-row::-webkit-scrollbar-thumb{
+/* subtle scrollbar (desktop) */
+.rail::-webkit-scrollbar{ height: 4px; }
+.rail::-webkit-scrollbar-track{ background: transparent; }
+.rail::-webkit-scrollbar-thumb{
   background: rgba(0,0,0,0.10);
-  border-radius: 6px;
+  border-radius: 999px;
 }
-.gallery-row:hover::-webkit-scrollbar-thumb{
+.rail:hover::-webkit-scrollbar-thumb{
   background: rgba(0,0,0,0.18);
 }
 
-/* Desktop tile size */
-.gallery-row a img{
+/* cards */
+.card{
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+/* image sizing (desktop) */
+.card img{
   height: 260px;
   width: auto;
   display: block;
   object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+  transition: transform .18s ease, opacity .18s ease;
 }
-
-/* Footer */
-.footer{
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  z-index: 30;
-}
-.footer a{ text-decoration: none; color: #111; }
+.card:hover img{ transform: translateY(-2px); opacity: .96; }
 
 /* =========================
-   MOBILE FIXES (≤ 768px)
-   - stack header
-   - shrink emblem
-   - make images bigger
-   - keep NO vertical scrolling
-   ========================= */
+   FOOTER
+========================= */
+.foot{
+  position: fixed;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 20;
+
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.foot a{ color: #111; text-decoration: none; opacity: .9; }
+.foot a:hover{ opacity: .6; }
+
+/* =========================
+   MOBILE FIXES (NO OVERLAP)
+   - key: stack nav under brand on very small screens
+   - keep 3 images visible in rail
+========================= */
 @media (max-width: 768px){
-
-  /* Stack the header so it never overlaps */
-  .top-bar{
-    top: 14px;
-    left: 16px;
-    right: 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
+  .topbar{
+    padding: calc(14px + env(safe-area-inset-top)) 16px 8px 16px;
+    column-gap: 12px;
   }
 
-  /* Menu becomes a horizontal row that can scroll if needed */
-  .header{
+  .emblem{
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav{
+    gap: 10px 12px;
+  }
+
+  .nav a{
+    font-size: 12px;
+    letter-spacing: 0.01em;
+  }
+
+  .stage{
+    padding: 98px 10px 62px 10px;
+  }
+
+  /* 3-up visible */
+  .rail{
+    gap: 12px;
+    padding: 10px 10px 14px 10px;
+  }
+
+  .card{
+    flex: 0 0 31vw; /* ~3 cards across */
+  }
+
+  .card img{
     width: 100%;
-  }
-
-  .header .links{
-    width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 14px;
-    padding-bottom: 6px;
-  }
-
-  /* hide the menu scrollbar on mobile */
-  .header .links::-webkit-scrollbar{ display: none; }
-  .header .links{ scrollbar-width: none; }
-
-  /* Make the red square smaller so it doesn't compress anything */
-  .red-square{
-    top: 78px;     /* below stacked header */
-    left: 16px;
-    width: 46px;
-    height: 46px;
-  }
-
-  /* Center the gallery on screen and make tiles larger */
-  .main-content{
-    padding: 0; /* full bleed */
-  }
-
-  .gallery-frame{
-    max-width: 100%;
-  }
-
-  .gallery-row{
-    padding: 0 16px 10px 16px;
-    gap: 14px;
-  }
-
-  /* 3 items can “fit the screen” as a layout target,
-     but still allow swipe. This makes them BIGGER. */
-  .gallery-row a{
-    flex: 0 0 calc((100vw - 16px - 16px - (14px * 2)) / 3);
-  }
-
-  .gallery-row a img{
-    width: 100%;
-    height: 180px;  /* bigger than your current mobile look */
+    height: 28vh;     /* fills screen more */
+    min-height: 190px;
+    max-height: 260px;
     object-fit: cover;
   }
 
-  .footer{
-    bottom: 12px;
-    font-size: 10px;
+  /* hide scrollbar on mobile */
+  .rail::-webkit-scrollbar{ display: none; }
+}
+
+/* Extra small phones: STOP name/menu collision completely */
+@media (max-width: 420px){
+  .topbar{
+    grid-template-columns: 1fr; /* stack */
+    row-gap: 10px;
+  }
+
+  .nav{
+    justify-self: start;        /* menu sits under name */
+    justify-content: flex-start;
+  }
+
+  .stage{
+    padding-top: 112px; /* extra space because header is now 2 rows */
   }
 }
