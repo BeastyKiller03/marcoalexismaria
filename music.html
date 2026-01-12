@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Music – marcoalexismaria</title>
 
-  <!-- Keep your global stylesheet for font consistency if you want -->
   <link rel="stylesheet" href="style.css" />
 
   <style>
@@ -18,73 +17,78 @@
       background: #faf9f6;
       color: #111;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      overflow: hidden; /* no vertical scroll */
     }
 
-    /* IMPORTANT: disable index veil + bg image on this page */
+    /* prevent index background/veil */
     body::before { display: none !important; }
     body { background-image: none !important; }
 
-    /* ===== TOP BAR (same layout as your “good” pages) ===== */
+    /* ===== TOP BAR ===== */
     .top-bar{
       position: fixed;
-      top: 16px;
-      left: 24px;
-      right: 24px;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       z-index: 1000;
+      background: #faf9f6;
     }
 
-    .top-corner-title{
-      font-size: 11px;              /* slightly smaller like your reference */
+    .brand{
+      font-size: 11px;
       letter-spacing: 0.10em;
-      text-transform: lowercase;     /* matches your “marcoalexismaria” vibe */
+      text-transform: lowercase;
       white-space: nowrap;
-      line-height: 1;
     }
 
-    .top-corner-title a{
+    .brand a{
       text-decoration: none;
       color: inherit;
     }
 
-    .top-corner-title a:hover{ opacity: .6; }
+    .menu{
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      min-width: 0;
+    }
 
-    .header .links{
+    .menu .links{
       display: flex;
       gap: 16px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      align-items: baseline;
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .menu .links::-webkit-scrollbar{ display: none; }
 
-    .header .links a{
-      font-size: 12px;
+    .menu .links a{
+      font-size: 13px;
       text-decoration: none;
       color: inherit;
-      white-space: nowrap;
-      line-height: 1;
+      opacity: .92;
     }
-    .header .links a:hover{ opacity: .6; }
 
     /* ===== MAIN ===== */
     .music-wrapper{
-      height: 100vh;
+      min-height: 100vh;
+      padding: calc(72px + env(safe-area-inset-top)) 16px 40px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 92px 24px 56px; /* clears fixed header */
     }
 
-    /* Desktop: 3-up centered */
+    /* Desktop: horizontal row */
     .album-row{
       display: flex;
       gap: 32px;
       align-items: center;
       justify-content: center;
+      flex-wrap: nowrap;
     }
 
     .album{
@@ -98,7 +102,7 @@
       width: 280px;
       height: 280px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 16px;
       box-shadow: 0 14px 28px rgba(0,0,0,0.14);
       display: block;
     }
@@ -106,11 +110,11 @@
     .album span{
       display: block;
       margin-top: 12px;
-      font-size: 12px;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
       text-align: center;
-      opacity: .8;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: .75;
     }
 
     .album:hover{
@@ -118,80 +122,35 @@
       opacity: .96;
     }
 
-    /* ===== MOBILE: clean + roomy (not compressed) ===== */
+    /* ===== MOBILE: VERTICAL STACK ===== */
     @media (max-width: 768px){
 
-      .top-bar{
-        top: 14px;
-        left: 16px;
-        right: 16px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+      html, body {
+        overflow-y: auto;
       }
 
-      .top-corner-title{
-        font-size: 10px;  /* smaller like your screenshot */
-      }
-
-      /* menu row becomes horizontally scrollable (so it never squishes) */
-      .header{
-        width: 100%;
-      }
-
-      .header .links{
-        width: 100%;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        gap: 14px;
-        padding-bottom: 6px;
-      }
-      .header .links::-webkit-scrollbar{ display: none; }
-      .header .links{ scrollbar-width: none; }
-
-      /* content sits below stacked header */
       .music-wrapper{
-        padding: 122px 0 44px;
+        padding-top: calc(84px + env(safe-area-inset-top));
+      }
+
+      .album-row{
+        flex-direction: column;
+        gap: 28px;
+        width: 100%;
         align-items: center;
       }
 
-      /* swipeable big covers */
-      .album-row{
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-        gap: 14px;
-        padding: 0 16px 14px;
-        justify-content: flex-start;
-      }
-      .album-row::-webkit-scrollbar{ display: none; }
-
       .album{
-        flex: 0 0 84vw;           /* big and roomy */
-        scroll-snap-align: center;
+        width: 100%;
+        max-width: 420px;
       }
 
       .album img{
         width: 100%;
-        height: 84vw;
-        max-height: 380px;
-        border-radius: 12px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 18px;
       }
-
-      .album span{
-        margin-top: 14px;
-        font-size: 12px;
-        letter-spacing: 0.12em;
-      }
-    }
-
-    /* tiny phones: give more top space */
-    @media (max-width: 420px){
-      .music-wrapper{ padding-top: 132px; }
-      .album{ flex-basis: 88vw; }
     }
   </style>
 </head>
@@ -200,11 +159,11 @@
 
   <!-- TOP BAR -->
   <header class="top-bar">
-    <div class="top-corner-title">
+    <div class="brand">
       <a href="index.html">marcoalexismaria</a>
     </div>
 
-    <div class="header">
+    <nav class="menu">
       <div class="links">
         <a href="videos.html">Videos</a>
         <a href="music.html">Music</a>
@@ -212,35 +171,38 @@
         <a href="events.html">Events</a>
         <a href="background.html">About</a>
       </div>
-    </div>
+    </nav>
   </header>
 
   <!-- MAIN -->
   <main class="music-wrapper">
     <div class="album-row">
 
-      <a class="album"
-         href="https://soundcloud.com/marco-maria-638714703/sets/taped"
-         target="_blank" rel="noopener">
-        <img src="cover/taped_cover.jpg" alt="TAPED cover" loading="lazy">
-        <span>TAPED</span>
-      </a>
+  <!-- ANG3L (first) -->
+  <a class="album"
+     href="https://soundcloud.com/prince-marco-278939286/ang3l"
+     target="_blank" rel="noopener">
+    <img src="cover/ang3l_cover.jpg" alt="ANG3L cover">
+    <span>ANG3L</span>
+  </a>
 
-      <a class="album"
-         href="https://soundcloud.com/prince-marco-278939286/sets/emp"
-         target="_blank" rel="noopener">
-        <img src="cover/emp_cover.jpg" alt="EMP cover" loading="lazy">
-        <span>EMP</span>
-      </a>
+  <!-- EMP (second) -->
+  <a class="album"
+     href="https://soundcloud.com/prince-marco-278939286/sets/emp"
+     target="_blank" rel="noopener">
+    <img src="cover/emp_cover.jpg" alt="EMP cover">
+    <span>EMP</span>
+  </a>
 
-      <a class="album"
-         href="https://soundcloud.com/prince-marco-278939286/ang3l"
-         target="_blank" rel="noopener">
-        <img src="cover/ang3l_cover.jpg" alt="ANG3L cover" loading="lazy">
-        <span>ANG3L</span>
-      </a>
+  <!-- TAPED (last) -->
+  <a class="album"
+     href="https://soundcloud.com/marco-maria-638714703/sets/taped"
+     target="_blank" rel="noopener">
+    <img src="cover/taped_cover.jpg" alt="TAPED cover">
+    <span>TAPED</span>
+  </a>
 
-    </div>
+</div>
   </main>
 
 </body>
