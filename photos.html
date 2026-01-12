@@ -3,268 +3,366 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Photos - Marco Maria</title>
+  <title>Photos – marcoalexismaria</title>
 
-  <!-- Uses the same global CSS as index -->
   <link rel="stylesheet" href="style.css" />
 
   <style>
+    * { box-sizing: border-box; }
+
     /* Page base */
-    html, body {
+    html, body{
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden; /* no scroll */
+      height: auto;
       background: #faf9f6;
       color: #111;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow-x: hidden;
     }
 
-    /* ===== TOP BAR (matches index layout) ===== */
+    /* prevent index background/veil from style.css */
+    body::before { display: none !important; content: none !important; }
+    body { background-image: none !important; }
+
+    /* ===== HEADER (MATCHES music.html) ===== */
     .top-bar{
-      position: fixed;
-      top: 16px;
-      left: 24px;
-      right: 24px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 14px;
       z-index: 1000;
-      pointer-events: none; /* so the viewer can still be clicked */
+      background: #faf9f6;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: transform 220ms ease;
+      will-change: transform;
     }
+    .top-bar.is-hidden{ transform: translateY(-130%); }
 
-    .top-bar a { pointer-events: auto; } /* re-enable clicks for links */
-
-    .top-corner-title{
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .brand{
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      white-space: nowrap;
       line-height: 1;
     }
-
-    .top-corner-title a{
+    .brand a{
       text-decoration: none;
       color: inherit;
     }
 
-    /* Menu styling (keeps your .header/.links structure but prevents weird shifts) */
-    .header .links{
+    .menu{
+      flex: 1;
       display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: nowrap;
       justify-content: flex-end;
+      min-width: 0;
     }
 
-    .header .links a{
-      font-size: 12px;
-      text-decoration: none;
-      color: inherit;
+    .menu .links{
+      display: flex;
+      gap: 16px;
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
       line-height: 1;
     }
+    .menu .links::-webkit-scrollbar{ display: none; }
 
-    .header .links a:hover{
-      opacity: 0.6;
+    .menu .links a{
+      font-size: 11px;                 /* same size as brand */
+      letter-spacing: 0.10em;          /* match brand vibe */
+      text-decoration: none;
+      color: inherit;
+      opacity: .92;
+      text-transform: none;
+    }
+    .menu .links a:hover{ opacity: .6; }
+
+    /* ===== GRID ===== */
+    .wrap{
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 18px 16px 48px;
     }
 
-    /* ===== VIEWER ===== */
-    .viewer{
+    .grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .thumb{
+      display: block;
+      text-decoration: none;
+      cursor: pointer; /* NOT zoom */
+    }
+
+    .thumb img{
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0; /* no rounding */
+      box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+      opacity: 1 !important;
+      filter: none !important;
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+
+    .thumb:hover img{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.10);
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.70); /* only greys out WHEN OPEN */
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .lightbox.open{ display: flex; }
+
+    .lightbox-inner{
       position: relative;
-      height: 100vh;
-      width: 100vw;
+      max-width: 96vw;
+      max-height: 90vh;
       display: grid;
       place-items: center;
-      background: #faf9f6;
-      padding: 72px 80px 40px; /* top padding accounts for fixed top-bar */
-      overflow: hidden;
     }
 
-    .viewer img{
-      max-width: min(calc(100vw - 160px), 1200px);
-      max-height: min(calc(100vh - 140px), 82vh);
-      object-fit: contain;
-      display: block;
-      border-radius: 4px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.14);
+    .lightbox img{
+      max-width: 96vw;
+      max-height: 90vh;
+      border-radius: 0;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      cursor: pointer; /* click to close */
     }
 
-    /* ===== CLEAN ARROWS ===== */
-    .nav-arrow{
+    /* Lightbox arrows (desktop + mobile) */
+    .lb-arrow{
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       width: 44px;
       height: 44px;
       border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.10);
-      background: rgba(255,255,255,0.55);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.35);
+      color: #fff;
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease;
-      opacity: 0.6;
-      z-index: 900;
-      padding: 0;
+      opacity: 0.85;
+      transition: opacity 150ms ease, transform 150ms ease;
+      user-select: none;
     }
+    .lb-arrow:hover{ opacity: 1; transform: translateY(-50%) scale(1.03); }
+    .lb-arrow:active{ transform: translateY(-50%) scale(0.98); }
 
-    .nav-arrow:hover{
-      opacity: 1;
-      background: rgba(255,255,255,0.75);
-      transform: translateY(-50%) scale(1.03);
-    }
+    .lb-arrow.left{ left: -64px; }
+    .lb-arrow.right{ right: -64px; }
 
-    .nav-arrow:active{
-      transform: translateY(-50%) scale(0.98);
-    }
-
-    .nav-arrow svg{
+    .lb-arrow svg{
       width: 18px;
       height: 18px;
       display: block;
     }
 
-    .nav-arrow.left{ left: 24px; }
-    .nav-arrow.right{ right: 24px; }
-
-    /* Hide source list */
-    .gallery{ display: none; }
+    .lb-hint{
+      position: fixed;
+      top: calc(12px + env(safe-area-inset-top));
+      right: 14px;
+      color: rgba(255,255,255,0.75);
+      font-size: 11px;
+      letter-spacing: .06em;
+      pointer-events: none;
+      z-index: 10000;
+    }
 
     /* ===== MOBILE ===== */
     @media (max-width: 768px){
-      .top-bar{
-        top: 14px;
-        left: 14px;
-        right: 14px;
+      .wrap{ padding: 16px 14px 48px; }
+
+      .grid{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
       }
 
-      .header .links{
-        gap: 10px;
-        flex-wrap: wrap;           /* if needed, wraps instead of colliding */
-        justify-content: flex-end;
-      }
-
-      .header .links a{
-        font-size: 11px;
-      }
-
-      .viewer{
-        padding: 86px 18px 22px;   /* more top space so wrapped menu doesn't overlap photo */
-      }
-
-      .viewer img{
-        max-width: 92vw;
-        max-height: 72vh;
-      }
-
-      .nav-arrow{
-        width: 40px;
-        height: 40px;
-      }
-
-      .nav-arrow.left{ left: 10px; }
-      .nav-arrow.right{ right: 10px; }
+      /* bring arrows inside on mobile so they don't get cut off */
+      .lb-arrow.left{ left: 8px; }
+      .lb-arrow.right{ right: 8px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- TOP BAR: name + menu (same layout concept as index) -->
-  <header class="top-bar">
-    <div class="top-corner-title">
-      <a href="index.html">Marco Maria</a>
+
+  <!-- HEADER (same as music.html) -->
+  <header class="top-bar" id="topbar">
+    <div class="brand">
+      <a href="index.html">marcoalexismaria</a>
     </div>
 
-    <div class="header">
+    <nav class="menu" aria-label="Primary">
       <div class="links">
         <a href="videos.html">Videos</a>
         <a href="music.html">Music</a>
-        <a href="photos.html">Photographs</a>
+        <a href="photos.html">Photos</a>
         <a href="events.html">Events</a>
         <a href="background.html">About</a>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <!-- Viewer -->
-  <div class="viewer">
-    <button class="nav-arrow left" aria-label="Previous photo">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-    </button>
+  <!-- GRID -->
+  <main class="wrap">
+    <section class="grid" id="grid">
+      <!-- Highest at top -->
+      <a class="thumb" data-src="photos/IMG_22.jpg" href="photos/IMG_22.jpg"><img src="photos/IMG_22.jpg" alt="Photograph 22" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_21.jpg" href="photos/IMG_21.jpg"><img src="photos/IMG_21.jpg" alt="Photograph 21" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_20.jpg" href="photos/IMG_20.jpg"><img src="photos/IMG_20.jpg" alt="Photograph 20" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_19.jpg" href="photos/IMG_19.jpg"><img src="photos/IMG_19.jpg" alt="Photograph 19" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_18.jpg" href="photos/IMG_18.jpg"><img src="photos/IMG_18.jpg" alt="Photograph 18" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_17.jpg" href="photos/IMG_17.jpg"><img src="photos/IMG_17.jpg" alt="Photograph 17" loading="lazy"></a>
 
-    <img id="current-photo" src="IMG_1.jpg" alt="">
+      <a class="thumb" data-src="photos/IMG_16.jpg" href="photos/IMG_16.jpg"><img src="photos/IMG_16.jpg" alt="Photograph 16" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_15.jpg" href="photos/IMG_15.jpg"><img src="photos/IMG_15.jpg" alt="Photograph 15" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_14.jpg" href="photos/IMG_14.jpg"><img src="photos/IMG_14.jpg" alt="Photograph 14" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_13.jpg" href="photos/IMG_13.jpg"><img src="photos/IMG_13.jpg" alt="Photograph 13" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_12.jpg" href="photos/IMG_12.jpg"><img src="photos/IMG_12.jpg" alt="Photograph 12" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_11.jpg" href="photos/IMG_11.jpg"><img src="photos/IMG_11.jpg" alt="Photograph 11" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_10.jpg" href="photos/IMG_10.jpg"><img src="photos/IMG_10.jpg" alt="Photograph 10" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_9.jpg" href="photos/IMG_9.jpg"><img src="photos/IMG_9.jpg" alt="Photograph 9" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_8.jpg" href="photos/IMG_8.jpg"><img src="photos/IMG_8.jpg" alt="Photograph 8" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_7.jpg" href="photos/IMG_7.jpg"><img src="photos/IMG_7.jpg" alt="Photograph 7" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_6.jpg" href="photos/IMG_6.jpg"><img src="photos/IMG_6.jpg" alt="Photograph 6" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_5.jpg" href="photos/IMG_5.jpg"><img src="photos/IMG_5.jpg" alt="Photograph 5" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_4.jpg" href="photos/IMG_4.jpg"><img src="photos/IMG_4.jpg" alt="Photograph 4" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_3.jpg" href="photos/IMG_3.jpg"><img src="photos/IMG_3.jpg" alt="Photograph 3" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_2.jpg" href="photos/IMG_2.jpg"><img src="photos/IMG_2.jpg" alt="Photograph 2" loading="lazy"></a>
+      <a class="thumb" data-src="photos/IMG_1.jpg" href="photos/IMG_1.jpg"><img src="photos/IMG_1.jpg" alt="Photograph 1" loading="lazy"></a>
+    </section>
+  </main>
 
-    <button class="nav-arrow right" aria-label="Next photo">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-    </button>
-  </div>
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-hint">esc • ← →</div>
 
-  <!-- Hidden source list -->
-  <div class="gallery">
-    <img id="img1"  src="photos/IMG_1.jpg"  alt="Image 1"  loading="lazy">
-    <img id="img2"  src="photos/IMG_2.jpg"  alt="Image 2"  loading="lazy">
-    <img id="img3"  src="photos/IMG_3.jpg"  alt="Image 3"  loading="lazy">
-    <img id="img4"  src="photos/IMG_4.jpg"  alt="Image 4"  loading="lazy">
-    <img id="img5"  src="photos/IMG_5.jpg"  alt="Image 5"  loading="lazy">
-    <img id="img6"  src="photos/IMG_6.jpg"  alt="Image 6"  loading="lazy">
-    <img id="img7"  src="photos/IMG_7.jpg"  alt="Image 7"  loading="lazy">
-    <img id="img8"  src="photos/IMG_8.jpg"  alt="Image 8"  loading="lazy">
-    <img id="img9"  src="photos/IMG_9.jpg"  alt="Image 9"  loading="lazy">
-    <img id="img10" src="photos/IMG_10.jpg" alt="Image 10" loading="lazy">
-    <img id="img11" src="photos/IMG_11.jpg" alt="Image 11" loading="lazy">
-    <img id="img12" src="photos/IMG_12.jpg" alt="Image 12" loading="lazy">
-    <img id="img13" src="photos/IMG_13.jpg" alt="Image 13" loading="lazy">
-    <img id="img14" src="photos/IMG_14.jpg" alt="Image 14" loading="lazy">
-    <img id="img15" src="photos/IMG_15.jpg" alt="Image 15" loading="lazy">
-    <img id="img16" src="photos/IMG_16.jpg" alt="Image 16" loading="lazy">
+    <div class="lightbox-inner">
+      <button class="lb-arrow left" id="prevBtn" aria-label="Previous">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+
+      <img id="lightboxImg" alt="">
+
+      <button class="lb-arrow right" id="nextBtn" aria-label="Next">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 
   <script>
-    const imageNodes = Array.from(document.querySelectorAll(".gallery img"));
-    const displayImg = document.getElementById("current-photo");
-    const btnPrev = document.querySelector(".nav-arrow.left");
-    const btnNext = document.querySelector(".nav-arrow.right");
+    /* Lightbox with arrow-key navigation */
+    const thumbs = Array.from(document.querySelectorAll(".thumb"));
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
     let currentIndex = 0;
+    let isOpen = false;
 
-    function showImage(index) {
-      if (!imageNodes.length) return;
+    function openLightbox(index){
+      currentIndex = index;
+      isOpen = true;
 
-      if (index < 0) index = imageNodes.length - 1;
-      if (index >= imageNodes.length) index = 0;
+      lightboxImg.src = thumbs[currentIndex].dataset.src || thumbs[currentIndex].href;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
 
+      // prevent background scroll only while open
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox(){
+      isOpen = false;
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+
+      document.body.style.overflow = "";
+    }
+
+    function showIndex(index){
+      if (!thumbs.length) return;
+      if (index < 0) index = thumbs.length - 1;
+      if (index >= thumbs.length) index = 0;
       currentIndex = index;
 
-      const srcImg = imageNodes[currentIndex];
-      displayImg.src = srcImg.src;
-      displayImg.alt = srcImg.alt || "";
-
-      if (srcImg.id) history.replaceState(null, "", "#" + srcImg.id);
+      const src = thumbs[currentIndex].dataset.src || thumbs[currentIndex].href;
+      lightboxImg.src = src;
     }
 
-    function initFromHash() {
-      const hash = window.location.hash.replace("#", "");
-      if (!hash) return showImage(0);
-
-      const idx = imageNodes.findIndex(img => img.id === hash);
-      showImage(idx >= 0 ? idx : 0);
-    }
-
-    btnPrev.addEventListener("click", () => showImage(currentIndex - 1));
-    btnNext.addEventListener("click", () => showImage(currentIndex + 1));
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") showImage(currentIndex - 1);
-      if (e.key === "ArrowRight") showImage(currentIndex + 1);
+    thumbs.forEach((thumb, idx) => {
+      thumb.addEventListener("click", (e) => {
+        e.preventDefault();
+        openLightbox(idx);
+      });
     });
 
-    window.addEventListener("load", initFromHash);
-    window.addEventListener("hashchange", initFromHash);
+    prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showIndex(currentIndex - 1); });
+    nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showIndex(currentIndex + 1); });
+
+    // Click backdrop or image to close
+    lightbox.addEventListener("click", () => closeLightbox());
+
+    // Keep arrow clicks from closing
+    prevBtn.addEventListener("click", (e) => e.stopPropagation());
+    nextBtn.addEventListener("click", (e) => e.stopPropagation());
+    lightboxImg.addEventListener("click", () => closeLightbox());
+
+    document.addEventListener("keydown", (e) => {
+      if (!isOpen) return;
+
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showIndex(currentIndex - 1);
+      if (e.key === "ArrowRight") showIndex(currentIndex + 1);
+    });
+
+    /* Hide header on scroll down, show on scroll up (like before) */
+    const topbar = document.getElementById("topbar");
+    let lastY = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+
+      if (y <= 10) {
+        topbar.classList.remove("is-hidden");
+        lastY = y;
+        return;
+      }
+
+      if (y > lastY + 6) topbar.classList.add("is-hidden");
+      else if (y < lastY - 6) topbar.classList.remove("is-hidden");
+
+      lastY = y;
+    }, { passive: true });
   </script>
+
 </body>
 </html>
 
