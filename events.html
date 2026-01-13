@@ -3,169 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events - marcoalexismaria</title>
+  <title>Events – marcoalexismaria</title>
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #faf9f6;   /* soft off-white like other pages */
-      color: #000;
+      height: auto;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      background: #faf9f6;
+      color: #111;
     }
 
-    /* TOP-LEFT NAME (back to index) */
-    .top-corner-title {
-      position: fixed;
-      top: 16px;
-      left: 24px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      z-index: 1000;
-    }
-    .top-corner-title a {
-      color: #000;
-      text-decoration: none;
-    }
-    .top-corner-title a:hover {
-      opacity: 0.6;
-    }
-
-    /* TOP-RIGHT MENU (same vibe as index) */
-    .header {
-      position: fixed;
-      top: 16px;
-      right: 24px;
-      z-index: 1000;
-    }
-
-    .header .links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;         /* lets it wrap on mobile instead of squishing */
-      justify-content: flex-end;
-    }
-
-    .header .links a {
-      font-size: 12px;
-      text-decoration: none;
-      color: #000;
-    }
-
-    .header .links a:hover {
-      opacity: 0.6;
-    }
-
-    /* MAIN CONTENT */
-    .main-content {
-      min-height: 100vh;
-      padding: 80px 24px 40px;  /* top padding so content clears fixed nav */
+    /* ===== HEADER (MATCHES music.html) ===== */
+    .top-bar{
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      z-index: 1000;
+      background: #faf9f6;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .brand{
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .brand a{
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand a:hover{ opacity: .6; }
+
+    .menu{
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .menu .links{
+      display: flex;
+      gap: 16px;
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      line-height: 1;
+    }
+    .menu .links::-webkit-scrollbar{ display: none; }
+
+    /* make links SAME size as brand (your preference) */
+    .menu .links a{
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      text-decoration: none;
+      color: inherit;
+      opacity: .92;
+      white-space: nowrap;
+    }
+    .menu .links a:hover{ opacity: .6; }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content{
+      min-height: calc(100vh - 64px);
+      padding: 26px 16px 48px;
+      display: flex;
       justify-content: center;
     }
 
-    .events-wrapper {
-      max-width: 900px;
+    .events-wrapper{
+      width: min(900px, 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      text-align: center;
+    }
+
+    .events-wrapper h2{
+      margin: 0;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: .8;
+    }
+
+    .event{
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2rem;
-      text-align: center;
+      gap: 12px;
     }
 
-    .events-wrapper h2 {
-      font-size: 14px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin: 0;
+    .event a{
+      display: block;
+      width: 100%;
+      text-decoration: none;
     }
 
-    .event img {
-      max-width: 100%;
+    .event img{
+      width: 100%;
       height: auto;
       border-radius: 6px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+      transition: transform 180ms ease, opacity 180ms ease;
     }
 
-    .event img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 14px rgba(0, 0, 0, 0.22);
+    .event img:hover{
+      transform: translateY(-2px);
+      opacity: 0.98;
     }
 
-    .event p {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
+    .event p{
+      margin: 0;
+      font-size: 13px;
+      opacity: .85;
     }
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .main-content {
-        padding: 80px 16px 32px;
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px){
+      .main-content{
+        padding: 22px 14px 44px;
       }
-
-      .events-wrapper h2 {
-        letter-spacing: 0.16em;
-        font-size: 13px;
+      .events-wrapper{
+        gap: 22px;
       }
-
-      .header .links {
-        gap: 10px;
-      }
-
-      .header .links a {
-        font-size: 11px;
+      .event p{
+        font-size: 12px;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- top-left name -->
-  <div class="top-corner-title">
-    <a href="index.html">MARCO MARIA</a>
-  </div>
-
-  <!-- top-right menu -->
-  <div class="header">
-    <div class="links">
-      <a href="videos.html">Videos</a>
-      <a href="music.html">Music</a>
-      <a href="photos.html">Photographs</a>
-      <a href="events.html">Events</a>
-      <a href="background.html">About</a>
+  <!-- HEADER -->
+  <header class="top-bar">
+    <div class="brand">
+      <a href="index.html">marcoalexismaria</a>
     </div>
-  </div>
 
-  <!-- centered events content -->
+    <nav class="menu" aria-label="Primary">
+      <div class="links">
+        <a href="videos.html">Videos</a>
+        <a href="music.html">Music</a>
+        <a href="photos.html">Photos</a>
+        <a href="events.html">Events</a>
+        <a href="background.html">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENT -->
   <main class="main-content">
     <div class="events-wrapper">
       <h2>Events</h2>
 
-      <!-- Example event -->
       <div class="event">
         <a href="https://partiful.com/e/SpXwA0RUBUlNDnfP1Hc8" target="_blank" rel="noopener">
-          <img src="flyer/event1.jpg" alt="Event Flyer">
+          <img src="flyer/event1.jpg" alt="Event Flyer" loading="lazy">
         </a>
-        <p><!-- optional event text here --></p>
+        <p></p>
       </div>
 
-      <!-- You can copy this block for future events
-      <div class="event">
-        <a href="LINK_TO_EVENT" target="_blank" rel="noopener">
-          <img src="event2.jpg" alt="Event 2 Flyer">
-        </a>
-        <p>Short description or date</p>
-      </div>
-      -->
+      <!-- duplicate this block for future events -->
     </div>
   </main>
 
