@@ -3,193 +3,201 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Background - marcoalxismaria </title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <title>Background – marcoalexismaria</title>
 
-    html, body {
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body{
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #ffffff;
-      color: #000;
+      height: auto;
+      background: #faf9f6;
+      color: #111;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow-x: hidden;
     }
 
-    /* ---------- TOP BAR (same vibe as index) ---------- */
+    /* prevent index background/veil from style.css */
+    body::before { display: none !important; content: none !important; }
+    body { background-image: none !important; }
 
-    .top-corner-title {
-      position: fixed;
-      top: 16px;
-      left: 24px;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      z-index: 1000;
-    }
-
-    .top-corner-title a {
-      color: #000;
-      text-decoration: none;
-    }
-
-    .top-corner-title a:hover {
-      opacity: 0.6;
-    }
-
-    .header {
-      position: fixed;
-      top: 16px;
-      right: 24px;
-      z-index: 1000;
-    }
-
-    .header .links {
+    /* ===== HEADER (MATCHES music.html) ===== */
+    .top-bar{
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
       display: flex;
-      flex-wrap: wrap;      /* helps on small screens */
+      align-items: center;
+      justify-content: space-between;
       gap: 14px;
-      justify-content: flex-end;
+      z-index: 1000;
+      background: #faf9f6;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
 
-    .header .links a {
-      font-size: 12px;
+    .brand{
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .brand a{
       text-decoration: none;
-      color: #000;
+      color: inherit;
+    }
+    .brand a:hover{ opacity: .6; }
+
+    .menu{
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      min-width: 0;
     }
 
-    .header .links a:hover {
-      opacity: 0.6;
+    .menu .links{
+      display: flex;
+      gap: 16px;
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      line-height: 1;
     }
+    .menu .links::-webkit-scrollbar{ display: none; }
 
-    /* ---------- MAIN LAYOUT ---------- */
+    /* menu items SAME size as brand */
+    .menu .links a{
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      text-decoration: none;
+      color: inherit;
+      opacity: .92;
+      white-space: nowrap;
+    }
+    .menu .links a:hover{ opacity: .6; }
 
-    main {
+    /* ===== PAGE LAYOUT ===== */
+    main{
       max-width: 900px;
       margin: 0 auto;
-      padding: 120px 24px 80px;  /* space so content sits under the fixed nav */
+      padding: 72px 16px 80px; /* sits under sticky header */
     }
 
-    /* Portrait at the top, small & centered */
-    .portrait-wrapper {
+    /* portrait */
+    .portrait-wrapper{
       display: flex;
       justify-content: center;
-      margin-top: 40px;
-      margin-bottom: 80px;
+      margin-top: 32px;
+      margin-bottom: 64px;
     }
 
-    .portrait-wrapper img {
-      width: 120px;            /* tweak this for size */
+    .portrait-wrapper img{
+      width: 120px;
       height: auto;
       object-fit: contain;
       display: block;
     }
 
-    /* Caption / text block with grey vertical line */
-    .bio-block {
+    /* bio block */
+    .bio-block{
       max-width: 640px;
       margin: 0 auto;
     }
 
-    .bio-inner {
-      border-left: 2px solid #d4d4d4;
+    .bio-inner{
+      border-left: 2px solid rgba(0,0,0,0.14);
       padding-left: 18px;
     }
 
-    .bio-line {
+    .bio-line{
       font-size: 14px;
       line-height: 1.7;
       margin: 0 0 6px 0;
     }
 
-    .bio-line.meta {
+    .bio-line.meta{
       margin-top: 12px;
     }
 
-    a.social-link {
-      color: #000;
+    a.social-link{
+      color: inherit;
       text-decoration: none;
     }
+    a.social-link:hover{ opacity: 0.6; }
 
-    a.social-link:hover {
-      opacity: 0.6;
-    }
-
-    /* ---------- MOBILE ---------- */
-
-    @media (max-width: 600px) {
-      main {
-        padding: 96px 16px 56px;
+    /* ===== MOBILE ===== */
+    @media (max-width: 600px){
+      main{
+        padding: 56px 14px 64px;
       }
 
-      .portrait-wrapper {
-        margin-top: 24px;
-        margin-bottom: 56px;
+      .portrait-wrapper{
+        margin-top: 20px;
+        margin-bottom: 44px;
       }
 
-      .portrait-wrapper img {
+      .portrait-wrapper img{
         width: 90px;
       }
 
-      .header .links {
-        gap: 10px;
-      }
-
-      .header .links a {
-        font-size: 11px;
-      }
-
-      .bio-inner {
+      .bio-inner{
         border-left-width: 1.5px;
         padding-left: 14px;
       }
 
-      .bio-line {
+      .bio-line{
         font-size: 13px;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- top-left name (back to index) -->
-  <div class="top-corner-title">
-    <a href="index.html">MARCO MARIA</a>
-  </div>
-
-  <!-- top-right menu -->
-  <div class="header">
-    <div class="links">
-      <a href="videos.html">Videos</a>
-      <a href="music.html">Music</a>
-      <a href="photos.html">Photographs</a>
-      <a href="events.html">Events</a>
-      <a href="background.html">About</a>
+  <!-- HEADER (same as music.html / photos.html) -->
+  <header class="top-bar">
+    <div class="brand">
+      <a href="index.html">marcoalexismaria</a>
     </div>
-  </div>
+
+    <nav class="menu" aria-label="Primary">
+      <div class="links">
+        <a href="videos.html">Videos</a>
+        <a href="music.html">Music</a>
+        <a href="photos.html">Photos</a>
+        <a href="events.html">Events</a>
+        <a href="background.html">About</a>
+      </div>
+    </nav>
+  </header>
 
   <main>
-    <!-- small self portrait -->
     <div class="portrait-wrapper">
-      <!-- replace self_portrait.jpg with your actual image file -->
-      <img src="self_portrait.jpg" alt="Self portrait of Marco Maria" />
+      <img src="self_portrait.jpg" alt="Self portrait of Marco Alexis Maria" />
     </div>
 
-    <!-- caption / description block -->
     <section class="bio-block">
       <div class="bio-inner">
         <p class="bio-line">© 2024 Marco Alexis Maria</p>
         <p class="bio-line">Born in Baldwin Park, California. Working in Los Angeles / Inland Empire.</p>
         <p class="bio-line">Artist, musician, photographer, designer, creative director.</p>
+
         <p class="bio-line meta">
-          Currently developing a personal EP, 2 Websites, Social Media Account, Music Videos, and Photo Shoots.
+          Currently developing a personal EP, 2 websites, social media account, music videos, and photo shoots.
         </p>
+
         <p class="bio-line meta">
-          <a class="social-link" href="https://www.instagram.com/marcoalexismaria/" target="_blank">Instagram</a> ·
-          <a class="social-link" href="https://www.tiktok.com/@marcoalexismaria">TikTok</a> .
-          <a class="social-link" href="https://tumblr.com/blog/marcoalexismaria" target="_blank">Tumblr</a> ·
-          <a class="social-link" href="https://www.youtube.com/channel/UCt1cisFLrUJF_PmynFvFOuw">YouTube</a> .
+          <a class="social-link" href="https://www.instagram.com/marcoalexismaria/" target="_blank" rel="noopener">Instagram</a> ·
+          <a class="social-link" href="https://www.tiktok.com/@marcoalexismaria" target="_blank" rel="noopener">TikTok</a> ·
+          <a class="social-link" href="https://tumblr.com/blog/marcoalexismaria" target="_blank" rel="noopener">Tumblr</a> ·
+          <a class="social-link" href="https://www.youtube.com/channel/UCt1cisFLrUJF_PmynFvFOuw" target="_blank" rel="noopener">YouTube</a>
         </p>
       </div>
     </section>
@@ -197,4 +205,3 @@
 
 </body>
 </html>
-
