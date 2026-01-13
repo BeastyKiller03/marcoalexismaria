@@ -10,7 +10,6 @@
   <style>
     * { box-sizing: border-box; }
 
-    /* Page base */
     html, body{
       margin: 0;
       padding: 0;
@@ -21,7 +20,7 @@
       overflow-x: hidden;
     }
 
-    /* prevent index background/veil from style.css */
+    /* prevent index background/veil from style.css on this page */
     body::before { display: none !important; content: none !important; }
     body { background-image: none !important; }
 
@@ -55,6 +54,7 @@
       text-decoration: none;
       color: inherit;
     }
+    .brand a:hover{ opacity: .6; }
 
     .menu{
       flex: 1;
@@ -74,13 +74,15 @@
     }
     .menu .links::-webkit-scrollbar{ display: none; }
 
+    /* menu items SAME size as brand */
     .menu .links a{
-      font-size: 11px;                 /* same size as brand */
-      letter-spacing: 0.10em;          /* match brand vibe */
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
       text-decoration: none;
       color: inherit;
       opacity: .92;
-      text-transform: none;
+      white-space: nowrap;
     }
     .menu .links a:hover{ opacity: .6; }
 
@@ -88,7 +90,7 @@
     .wrap{
       width: min(1200px, 100%);
       margin: 0 auto;
-      padding: 18px 16px 48px;
+      padding: 18px 16px 56px;
     }
 
     .grid{
@@ -100,14 +102,14 @@
     .thumb{
       display: block;
       text-decoration: none;
-      cursor: pointer; /* NOT zoom */
+      cursor: pointer; /* no zoom cursor */
     }
 
     .thumb img{
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 0; /* no rounding */
+      border-radius: 0; /* sharp corners */
       box-shadow: 0 10px 22px rgba(0,0,0,0.08);
       opacity: 1 !important;
       filter: none !important;
@@ -124,7 +126,7 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(0,0,0,0.70); /* only greys out WHEN OPEN */
+      background: rgba(0,0,0,0.70); /* grey only when open */
       display: none;
       align-items: center;
       justify-content: center;
@@ -145,10 +147,23 @@
       max-height: 90vh;
       border-radius: 0;
       box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-      cursor: pointer; /* click to close */
+      cursor: pointer; /* click image to close */
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
-    /* Lightbox arrows (desktop + mobile) */
+    .lb-hint{
+      position: fixed;
+      top: calc(12px + env(safe-area-inset-top));
+      right: 14px;
+      color: rgba(255,255,255,0.75);
+      font-size: 11px;
+      letter-spacing: .06em;
+      pointer-events: none;
+      z-index: 10000;
+    }
+
+    /* Lightbox arrows */
     .lb-arrow{
       position: absolute;
       top: 50%;
@@ -165,12 +180,10 @@
       opacity: 0.85;
       transition: opacity 150ms ease, transform 150ms ease;
       user-select: none;
+      padding: 0;
     }
     .lb-arrow:hover{ opacity: 1; transform: translateY(-50%) scale(1.03); }
     .lb-arrow:active{ transform: translateY(-50%) scale(0.98); }
-
-    .lb-arrow.left{ left: -64px; }
-    .lb-arrow.right{ right: -64px; }
 
     .lb-arrow svg{
       width: 18px;
@@ -178,27 +191,20 @@
       display: block;
     }
 
-    .lb-hint{
-      position: fixed;
-      top: calc(12px + env(safe-area-inset-top));
-      right: 14px;
-      color: rgba(255,255,255,0.75);
-      font-size: 11px;
-      letter-spacing: .06em;
-      pointer-events: none;
-      z-index: 10000;
-    }
+    /* On desktop, keep arrows outside the image slightly */
+    .lb-arrow.left{ left: -64px; }
+    .lb-arrow.right{ right: -64px; }
 
     /* ===== MOBILE ===== */
     @media (max-width: 768px){
-      .wrap{ padding: 16px 14px 48px; }
+      .wrap{ padding: 16px 14px 56px; }
 
       .grid{
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
       }
 
-      /* bring arrows inside on mobile so they don't get cut off */
+      /* bring arrows inside on mobile */
       .lb-arrow.left{ left: 8px; }
       .lb-arrow.right{ right: 8px; }
     }
@@ -207,7 +213,7 @@
 
 <body>
 
-  <!-- HEADER (same as music.html) -->
+  <!-- HEADER -->
   <header class="top-bar" id="topbar">
     <div class="brand">
       <a href="index.html">marcoalexismaria</a>
@@ -228,29 +234,29 @@
   <main class="wrap">
     <section class="grid" id="grid">
       <!-- Highest at top -->
-      <a class="thumb" data-src="photos/IMG_22.jpg" href="photos/IMG_22.jpg"><img src="photos/IMG_22.jpg" alt="Photograph 22" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_21.jpg" href="photos/IMG_21.jpg"><img src="photos/IMG_21.jpg" alt="Photograph 21" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_20.jpg" href="photos/IMG_20.jpg"><img src="photos/IMG_20.jpg" alt="Photograph 20" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_19.jpg" href="photos/IMG_19.jpg"><img src="photos/IMG_19.jpg" alt="Photograph 19" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_18.jpg" href="photos/IMG_18.jpg"><img src="photos/IMG_18.jpg" alt="Photograph 18" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_17.jpg" href="photos/IMG_17.jpg"><img src="photos/IMG_17.jpg" alt="Photograph 17" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_22.jpg" data-src="photos/IMG_22.jpg"><img src="photos/IMG_22.jpg" alt="Photograph 22" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_21.jpg" data-src="photos/IMG_21.jpg"><img src="photos/IMG_21.jpg" alt="Photograph 21" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_20.jpg" data-src="photos/IMG_20.jpg"><img src="photos/IMG_20.jpg" alt="Photograph 20" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_19.jpg" data-src="photos/IMG_19.jpg"><img src="photos/IMG_19.jpg" alt="Photograph 19" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_18.jpg" data-src="photos/IMG_18.jpg"><img src="photos/IMG_18.jpg" alt="Photograph 18" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_17.jpg" data-src="photos/IMG_17.jpg"><img src="photos/IMG_17.jpg" alt="Photograph 17" loading="lazy"></a>
 
-      <a class="thumb" data-src="photos/IMG_16.jpg" href="photos/IMG_16.jpg"><img src="photos/IMG_16.jpg" alt="Photograph 16" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_15.jpg" href="photos/IMG_15.jpg"><img src="photos/IMG_15.jpg" alt="Photograph 15" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_14.jpg" href="photos/IMG_14.jpg"><img src="photos/IMG_14.jpg" alt="Photograph 14" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_13.jpg" href="photos/IMG_13.jpg"><img src="photos/IMG_13.jpg" alt="Photograph 13" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_12.jpg" href="photos/IMG_12.jpg"><img src="photos/IMG_12.jpg" alt="Photograph 12" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_11.jpg" href="photos/IMG_11.jpg"><img src="photos/IMG_11.jpg" alt="Photograph 11" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_10.jpg" href="photos/IMG_10.jpg"><img src="photos/IMG_10.jpg" alt="Photograph 10" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_9.jpg" href="photos/IMG_9.jpg"><img src="photos/IMG_9.jpg" alt="Photograph 9" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_8.jpg" href="photos/IMG_8.jpg"><img src="photos/IMG_8.jpg" alt="Photograph 8" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_7.jpg" href="photos/IMG_7.jpg"><img src="photos/IMG_7.jpg" alt="Photograph 7" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_6.jpg" href="photos/IMG_6.jpg"><img src="photos/IMG_6.jpg" alt="Photograph 6" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_5.jpg" href="photos/IMG_5.jpg"><img src="photos/IMG_5.jpg" alt="Photograph 5" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_4.jpg" href="photos/IMG_4.jpg"><img src="photos/IMG_4.jpg" alt="Photograph 4" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_3.jpg" href="photos/IMG_3.jpg"><img src="photos/IMG_3.jpg" alt="Photograph 3" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_2.jpg" href="photos/IMG_2.jpg"><img src="photos/IMG_2.jpg" alt="Photograph 2" loading="lazy"></a>
-      <a class="thumb" data-src="photos/IMG_1.jpg" href="photos/IMG_1.jpg"><img src="photos/IMG_1.jpg" alt="Photograph 1" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_16.jpg" data-src="photos/IMG_16.jpg"><img src="photos/IMG_16.jpg" alt="Photograph 16" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_15.jpg" data-src="photos/IMG_15.jpg"><img src="photos/IMG_15.jpg" alt="Photograph 15" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_14.jpg" data-src="photos/IMG_14.jpg"><img src="photos/IMG_14.jpg" alt="Photograph 14" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_13.jpg" data-src="photos/IMG_13.jpg"><img src="photos/IMG_13.jpg" alt="Photograph 13" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_12.jpg" data-src="photos/IMG_12.jpg"><img src="photos/IMG_12.jpg" alt="Photograph 12" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_11.jpg" data-src="photos/IMG_11.jpg"><img src="photos/IMG_11.jpg" alt="Photograph 11" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_10.jpg" data-src="photos/IMG_10.jpg"><img src="photos/IMG_10.jpg" alt="Photograph 10" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_9.jpg" data-src="photos/IMG_9.jpg"><img src="photos/IMG_9.jpg" alt="Photograph 9" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_8.jpg" data-src="photos/IMG_8.jpg"><img src="photos/IMG_8.jpg" alt="Photograph 8" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_7.jpg" data-src="photos/IMG_7.jpg"><img src="photos/IMG_7.jpg" alt="Photograph 7" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_6.jpg" data-src="photos/IMG_6.jpg"><img src="photos/IMG_6.jpg" alt="Photograph 6" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_5.jpg" data-src="photos/IMG_5.jpg"><img src="photos/IMG_5.jpg" alt="Photograph 5" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_4.jpg" data-src="photos/IMG_4.jpg"><img src="photos/IMG_4.jpg" alt="Photograph 4" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_3.jpg" data-src="photos/IMG_3.jpg"><img src="photos/IMG_3.jpg" alt="Photograph 3" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_2.jpg" data-src="photos/IMG_2.jpg"><img src="photos/IMG_2.jpg" alt="Photograph 2" loading="lazy"></a>
+      <a class="thumb" href="photos/IMG_1.jpg" data-src="photos/IMG_1.jpg"><img src="photos/IMG_1.jpg" alt="Photograph 1" loading="lazy"></a>
     </section>
   </main>
 
@@ -276,7 +282,7 @@
   </div>
 
   <script>
-    /* Lightbox with arrow-key navigation */
+    /* ===== Lightbox with arrow-key navigation ===== */
     const thumbs = Array.from(document.querySelectorAll(".thumb"));
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightboxImg");
@@ -290,11 +296,13 @@
       currentIndex = index;
       isOpen = true;
 
-      lightboxImg.src = thumbs[currentIndex].dataset.src || thumbs[currentIndex].href;
+      const src = thumbs[currentIndex].dataset.src || thumbs[currentIndex].href;
+      lightboxImg.src = src;
+
       lightbox.classList.add("open");
       lightbox.setAttribute("aria-hidden", "false");
 
-      // prevent background scroll only while open
+      // prevent background scroll ONLY while open
       document.body.style.overflow = "hidden";
     }
 
@@ -303,7 +311,6 @@
       lightbox.classList.remove("open");
       lightbox.setAttribute("aria-hidden", "true");
       lightboxImg.src = "";
-
       document.body.style.overflow = "";
     }
 
@@ -324,26 +331,23 @@
       });
     });
 
+    // Arrow buttons
     prevBtn.addEventListener("click", (e) => { e.stopPropagation(); showIndex(currentIndex - 1); });
     nextBtn.addEventListener("click", (e) => { e.stopPropagation(); showIndex(currentIndex + 1); });
 
-    // Click backdrop or image to close
-    lightbox.addEventListener("click", () => closeLightbox());
+    // Click backdrop OR image closes (but arrow buttons won't)
+    lightbox.addEventListener("click", closeLightbox);
+    lightboxImg.addEventListener("click", (e) => { e.stopPropagation(); closeLightbox(); });
 
-    // Keep arrow clicks from closing
-    prevBtn.addEventListener("click", (e) => e.stopPropagation());
-    nextBtn.addEventListener("click", (e) => e.stopPropagation());
-    lightboxImg.addEventListener("click", () => closeLightbox());
-
+    // Keyboard: esc closes, arrows navigate
     document.addEventListener("keydown", (e) => {
       if (!isOpen) return;
-
       if (e.key === "Escape") closeLightbox();
       if (e.key === "ArrowLeft") showIndex(currentIndex - 1);
       if (e.key === "ArrowRight") showIndex(currentIndex + 1);
     });
 
-    /* Hide header on scroll down, show on scroll up (like before) */
+    /* ===== Hide header on scroll down, show on scroll up ===== */
     const topbar = document.getElementById("topbar");
     let lastY = window.scrollY;
 
@@ -365,7 +369,3 @@
 
 </body>
 </html>
-
-
-
-
