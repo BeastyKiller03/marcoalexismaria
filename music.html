@@ -59,7 +59,7 @@
 
     .menu .links{
       display: flex;
-      gap: 16px;
+      gap: 14px;                    /* slightly tighter */
       white-space: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -68,7 +68,9 @@
     .menu .links::-webkit-scrollbar{ display: none; }
 
     .menu .links a{
-      font-size: 13px;
+      font-size: 11px;              /* match brand size */
+      letter-spacing: 0.10em;       /* match brand spacing */
+      text-transform: lowercase;    /* match brand style */
       text-decoration: none;
       color: inherit;
       opacity: .92;
@@ -167,7 +169,7 @@
       <div class="links">
         <a href="videos.html">Videos</a>
         <a href="music.html">Music</a>
-        <a href="photos.html">Photographs</a>
+        <a href="photos.html">Photos</a>
         <a href="events.html">Events</a>
         <a href="background.html">About</a>
       </div>
