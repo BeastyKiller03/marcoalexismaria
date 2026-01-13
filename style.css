@@ -5,39 +5,54 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html, body {
+html, body{
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* lock page: no vertical scroll */
 }
 
+/* Default: pages can scroll */
 body{
+  overflow-x: hidden;
+  overflow-y: auto;
+
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   color: #111;
 
-  /* Background replaces white panel */
+  /* Background image ONLY if a page wants it (index) */
+  background: #faf9f6;
+}
+
+/* Opt-in background image (index only) */
+body.has-bg{
   background-image: url("bg_01.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* soft veil so text is readable over any bg */
-body::before{
+/* Opt-in veil (index only) */
+body.has-veil::before{
   content:"";
   position: fixed;
   inset: 0;
   background: rgba(255,255,255,0.72);
   pointer-events: none;
-  z-index: 0; /* IMPORTANT: sits behind everything */
+  z-index: 0; /* behind UI */
 }
 
-/* ensure all main UI sits above veil */
+/* Opt-in no-scroll (index only) */
+body.lock-page{
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Ensure index UI sits above veil */
 .topbar, .stage, .foot { position: relative; z-index: 1; }
 
 /* =========================
-   TOP BAR (DESKTOP/TABLET)
+   TOP BAR (INDEX HEADER)
+   NOTE: scoped so it won’t mess with .top-bar pages
 ========================= */
 .topbar{
   position: fixed;
@@ -56,13 +71,13 @@ body::before{
 }
 
 /* Brand block (name + emblem) */
-.brand{
+.topbar .brand{
   display: inline-flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.brand-name{
+.topbar .brand-name{
   font-size: 12px;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -72,53 +87,49 @@ body::before{
 }
 
 /* Red emblem square */
-.emblem{
+.topbar .emblem{
   width: 58px;
   height: 58px;
   border: 0;
   background: #ff0033;
   cursor: pointer;
   padding: 0;
-  border-radius: 0; /* keep it sharp like your reference */
+  border-radius: 0;
   box-shadow: 0 8px 18px rgba(0,0,0,0.10);
   transition: transform .18s ease, opacity .18s ease;
 }
-.emblem:hover{ opacity: .92; transform: translateY(-1px); }
-.emblem:active{ transform: translateY(0px) scale(.98); }
+.topbar .emblem:hover{ opacity: .92; transform: translateY(-1px); }
+.topbar .emblem:active{ transform: translateY(0px) scale(.98); }
 
 /* Nav links */
-.nav{
+.topbar .nav{
   justify-self: end;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 12px 16px;
-
-  /* Prevents overlap by keeping nav inside available space */
   max-width: 100%;
 }
 
-.nav a{
+.topbar .nav a{
   font-size: 12px;
   text-decoration: none;
   color: #111;
   opacity: .92;
   white-space: nowrap;
 }
-.nav a:hover{ opacity: .6; }
+.topbar .nav a:hover{ opacity: .6; }
 
 /* =========================
-   STAGE / GALLERY STRIP
+   INDEX STAGE / GALLERY STRIP
 ========================= */
 .stage{
   height: 100vh;
   width: 100vw;
   display: grid;
   place-items: center;
-
-  /* room for fixed topbar + footer */
-  padding: 96px 24px 64px 24px;
+  padding: 96px 24px 64px 24px; /* room for fixed topbar + footer */
 }
 
 .rail{
@@ -168,7 +179,7 @@ body::before{
 .card:hover img{ transform: translateY(-2px); opacity: .96; }
 
 /* =========================
-   FOOTER
+   FOOTER (INDEX)
 ========================= */
 .foot{
   position: fixed;
@@ -185,9 +196,7 @@ body::before{
 .foot a:hover{ opacity: .6; }
 
 /* =========================
-   MOBILE FIXES (NO OVERLAP)
-   - key: stack nav under brand on very small screens
-   - keep 3 images visible in rail
+   MOBILE (INDEX)
 ========================= */
 @media (max-width: 768px){
   .topbar{
@@ -195,16 +204,16 @@ body::before{
     column-gap: 12px;
   }
 
-  .emblem{
+  .topbar .emblem{
     width: 44px;
     height: 44px;
   }
 
-  .nav{
+  .topbar .nav{
     gap: 10px 12px;
   }
 
-  .nav a{
+  .topbar .nav a{
     font-size: 12px;
     letter-spacing: 0.01em;
   }
@@ -225,29 +234,28 @@ body::before{
 
   .card img{
     width: 100%;
-    height: 28vh;     /* fills screen more */
+    height: 28vh;
     min-height: 190px;
     max-height: 260px;
     object-fit: cover;
   }
 
-  /* hide scrollbar on mobile */
   .rail::-webkit-scrollbar{ display: none; }
 }
 
-/* Extra small phones: STOP name/menu collision completely */
+/* Extra small phones: STOP collision completely (index) */
 @media (max-width: 420px){
   .topbar{
     grid-template-columns: 1fr; /* stack */
     row-gap: 10px;
   }
 
-  .nav{
-    justify-self: start;        /* menu sits under name */
+  .topbar .nav{
+    justify-self: start;
     justify-content: flex-start;
   }
 
   .stage{
-    padding-top: 112px; /* extra space because header is now 2 rows */
+    padding-top: 112px;
   }
 }
