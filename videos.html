@@ -3,175 +3,201 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Videos - marcoalexismaria</title>
+  <title>Videos – marcoalexismaria</title>
 
   <style>
-    /* BASIC RESET */
     * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
       padding: 0;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: #faf9f6; /* same as index panel */
-      color: #000;
-      overflow-x: hidden;
+      height: 100%;
+      background: #faf9f6;
+      color: #111;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      overflow: hidden; /* keep it clean like your horizontal pages */
     }
 
-    /* TOP LEFT NAME */
-    .top-corner-title {
+    /* ===== TOP BAR (matches your music.html style) ===== */
+    .top-bar{
       position: fixed;
-      top: 16px;
-      left: 24px;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
       z-index: 1000;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      background: #faf9f6;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .top-corner-title a {
+
+    .brand{
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: lowercase;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .brand a{
       text-decoration: none;
-      color: #000;
+      color: inherit;
     }
 
-    /* TOP RIGHT MENU (same as index) */
-    .header {
-      position: fixed;
-      top: 16px;
-      right: 24px;
-      z-index: 1000;
+    .menu{
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      min-width: 0;
     }
 
-    .header .links a {
-      font-size: 12px;
-      margin-left: 16px;
+    .menu .links{
+      display: flex;
+      gap: 16px;
+      white-space: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      line-height: 1;
+    }
+    .menu .links::-webkit-scrollbar{ display: none; }
+
+    .menu .links a{
+      font-size: 11px;           /* SAME SIZE AS BRAND */
+      letter-spacing: 0.10em;    /* match brand vibe */
+      text-transform: lowercase; /* consistent */
       text-decoration: none;
-      color: #000;
+      color: inherit;
+      opacity: .92;
+      padding: 2px 0;
     }
+    .menu .links a:hover{ opacity: .6; }
 
-    .header .links a:hover {
-      opacity: 0.6;
-    }
-
-    /* MAIN SECTION (same structure as index) */
-    .main-content {
+    /* ===== MAIN ===== */
+    .main-content{
       height: 100vh;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: calc(72px + env(safe-area-inset-top)) 16px 24px; /* space for top bar */
     }
 
-    .gallery-frame {
+    .gallery-frame{
       width: 100%;
       max-width: 1400px;
-      padding: 0 40px;
     }
 
-    /* HORIZONTAL SCROLL ROW */
-    .gallery-row {
+    /* horizontal rail */
+    .gallery-row{
       display: flex;
-      gap: 1.5rem;
+      gap: 16px;
       overflow-x: auto;
       overflow-y: hidden;
       scroll-behavior: smooth;
-      padding-bottom: 0.5rem;
-      white-space: nowrap;
+      padding: 10px 6px 14px;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
     }
 
-    /* LIGHT SCROLLBAR */
-    .gallery-row::-webkit-scrollbar {
-      height: 4px;
+    .gallery-row::-webkit-scrollbar{ height: 4px; }
+    .gallery-row::-webkit-scrollbar-track{ background: transparent; }
+    .gallery-row::-webkit-scrollbar-thumb{
+      background: rgba(0,0,0,0.10);
+      border-radius: 999px;
     }
-    .gallery-row::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.08);
-      border-radius: 4px;
-    }
-    .gallery-row:hover::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.15);
+    .gallery-row:hover::-webkit-scrollbar-thumb{
+      background: rgba(0,0,0,0.18);
     }
 
-    /* VIDEO THUMBNAILS */
-    .video-thumb img {
+    /* thumbs */
+    .video-thumb{
+      position: relative;
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    .video-thumb img{
       height: 260px;
       width: auto;
       display: block;
-      border-radius: 6px;
+      border-radius: 0; /* keep sharp if you want that clean look */
       object-fit: cover;
-      transition: transform .25s ease, opacity .25s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+      transition: transform .18s ease, opacity .18s ease;
     }
-    .video-thumb img:hover {
-      transform: scale(1.03);
-      opacity: 0.95;
+    .video-thumb:hover img{
+      transform: translateY(-2px);
+      opacity: 0.96;
     }
 
-    /* PLAY BADGE (optional aesthetic) */
-    .video-thumb {
-      position: relative;
-    }
-    .video-thumb .play-badge {
+    /* play badge */
+    .play-badge{
       position: absolute;
       inset: 0;
       display: grid;
       place-items: center;
       font-size: 2rem;
       color: #fff;
-      text-shadow: 0 0 10px rgba(0,0,0,0.8);
+      text-shadow: 0 0 12px rgba(0,0,0,0.85);
       opacity: 0;
-      transition: opacity .2s;
+      transition: opacity .18s ease;
+      pointer-events: none;
     }
-    .video-thumb:hover .play-badge {
-      opacity: 1;
-    }
+    .video-thumb:hover .play-badge{ opacity: 1; }
 
-    /* MOBILE FIXES */
-    @media (max-width: 768px) {
-      .header .links a {
-        font-size: 11px;
-        margin-left: 10px;
-      }
-      .gallery-frame {
-        padding: 0 10px;
-      }
-      .video-thumb img {
-        height: 180px; /* smaller thumbnails for mobile so they fit */
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px){
+      /* hide rail scrollbar on mobile */
+      .gallery-row::-webkit-scrollbar{ display: none; }
+
+      .video-thumb img{
+        height: 190px;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- TOP LEFT NAME -->
-  <div class="top-corner-title">
-    <a href="index.html">Marco Maria</a>
-  </div>
-
-  <!-- TOP RIGHT NAV -->
-  <div class="header">
-    <div class="links">
-      <a href="videos.html">Videos</a>
-      <a href="music.html">Music</a>
-      <a href="photos.html">Photographs</a>
-      <a href="events.html">Events</a>
-      <a href="background.html">About</a>
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="brand">
+      <a href="index.html">marcoalexismaria</a>
     </div>
-  </div>
 
-  <!-- MAIN: horizontal scrolling video thumbnails -->
+    <nav class="menu" aria-label="Primary">
+      <div class="links">
+        <a href="videos.html">Videos</a>
+        <a href="music.html">Music</a>
+        <a href="photos.html">Photos</a>
+        <a href="events.html">Events</a>
+        <a href="background.html">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
   <main class="main-content">
     <div class="gallery-frame">
       <div class="gallery-row">
 
-        <a class="video-thumb" href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank">
+        <a class="video-thumb" href="https://www.youtube.com/watch?v=1XqXP-D-u-I" target="_blank" rel="noopener">
           <img src="videos/img_02.png" alt="ANG3L — Official Video" loading="lazy">
           <span class="play-badge">▶</span>
         </a>
 
-        <a class="video-thumb" href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank">
-          <img src="videos/img_01.png" alt="id tid try 01 1" — Official Video" loading="lazy">
+        <a class="video-thumb" href="https://www.youtube.com/watch?v=COu9yyKm4tE" target="_blank" rel="noopener">
+          <img src="videos/img_01.png" alt="ED-EMY — Official Video" loading="lazy">
           <span class="play-badge">▶</span>
         </a>
 
-        <a class="video-thumb" href="https://www.youtube.com/watch?v=Qyz7bBXBfME" target="_blank">
+        <a class="video-thumb" href="https://www.youtube.com/watch?v=Qyz7bBXBfME" target="_blank" rel="noopener">
           <img src="videos/img_03.png" alt="TAPED" loading="lazy">
           <span class="play-badge">▶</span>
         </a>
@@ -182,6 +208,3 @@
 
 </body>
 </html>
-
-
-
