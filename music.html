@@ -1,211 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music – marcoalexismaria</title>
+<main class="music-wrapper">
+  <div style="width:100%; max-width:520px; margin-bottom:40px; text-align:center;">
 
-  <link rel="stylesheet" href="style.css" />
-
-  <style>
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #faf9f6;
-      color: #111;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    /* prevent index background/veil */
-    body::before { display: none !important; }
-    body { background-image: none !important; }
-
-    /* ===== TOP BAR ===== */
-    .top-bar{
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: calc(12px + env(safe-area-inset-top)) 16px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      z-index: 1000;
-      background: #faf9f6;
-    }
-
-    .brand{
-      font-size: 11px;
-      letter-spacing: 0.10em;
-      text-transform: lowercase;
-      white-space: nowrap;
-    }
-
-    .brand a{
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .menu{
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
-      min-width: 0;
-    }
-
-    .menu .links{
-      display: flex;
-      gap: 14px;                    /* slightly tighter */
-      white-space: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .menu .links::-webkit-scrollbar{ display: none; }
-
-    .menu .links a{
-      font-size: 11px;              /* match brand size */
-      letter-spacing: 0.10em;       /* match brand spacing */
-      text-transform: lowercase;    /* match brand style */
-      text-decoration: none;
-      color: inherit;
-      opacity: .92;
-    }
-
-    /* ===== MAIN ===== */
-    .music-wrapper{
-      min-height: 100vh;
-      padding: calc(72px + env(safe-area-inset-top)) 16px 40px;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Desktop: horizontal row */
-    .album-row{
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: nowrap;
-    }
-
-    .album{
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      transition: transform .18s ease, opacity .18s ease;
-    }
-
-    .album img{
-      width: 280px;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 14px 28px rgba(0,0,0,0.14);
-      display: block;
-    }
-
-    .album span{
-      display: block;
-      margin-top: 12px;
-      text-align: center;
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      opacity: .75;
-    }
-
-    .album:hover{
-      transform: translateY(-2px);
-      opacity: .96;
-    }
-
-    /* ===== MOBILE: VERTICAL STACK ===== */
-    @media (max-width: 768px){
-
-      html, body {
-        overflow-y: auto;
-      }
-
-      .music-wrapper{
-        padding-top: calc(84px + env(safe-area-inset-top));
-      }
-
-      .album-row{
-        flex-direction: column;
-        gap: 28px;
-        width: 100%;
-        align-items: center;
-      }
-
-      .album{
-        width: 100%;
-        max-width: 420px;
-      }
-
-      .album img{
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-        border-radius: 18px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- TOP BAR -->
-  <header class="top-bar">
-    <div class="brand">
-      <a href="index.html">marcoalexismaria</a>
+    <div style="
+      font-size:12px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      opacity:.7;
+      margin-bottom:12px;
+    ">
+      sins not tragedies (rmx)
     </div>
 
-    <nav class="menu">
-      <div class="links">
-        <a href="videos.html">Videos</a>
-        <a href="music.html">Music</a>
-        <a href="photos.html">Photos</a>
-        <a href="events.html">Events</a>
-        <a href="background.html">About</a>
-      </div>
-    </nav>
-  </header>
+    <audio controls style="width:100%;">
+      <source src="assets/audio/sinsnottragedies_rmx.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
 
-  <!-- MAIN -->
-  <main class="music-wrapper">
-    <div class="album-row">
+  </div>
 
-  <!-- ANG3L (first) -->
-  <a class="album"
-     href="https://soundcloud.com/prince-marco-278939286/ang3l"
-     target="_blank" rel="noopener">
-    <img src="cover/ang3l_cover.jpg" alt="ANG3L cover">
-    <span>ANG3L</span>
-  </a>
+  <div class="album-row">
 
-  <!-- EMP (second) -->
-  <a class="album"
-     href="https://soundcloud.com/prince-marco-278939286/sets/emp"
-     target="_blank" rel="noopener">
-    <img src="cover/emp_cover.jpg" alt="EMP cover">
-    <span>EMP</span>
-  </a>
+    <!-- ANG3L -->
+    <a class="album"
+       href="https://soundcloud.com/prince-marco-278939286/ang3l"
+       target="_blank" rel="noopener">
+      <img src="cover/ang3l_cover.jpg" alt="ANG3L cover">
+      <span>ANG3L</span>
+    </a>
 
-  <!-- TAPED (last) -->
-  <a class="album"
-     href="https://soundcloud.com/marco-maria-638714703/sets/taped"
-     target="_blank" rel="noopener">
-    <img src="cover/taped_cover.jpg" alt="TAPED cover">
-    <span>TAPED</span>
-  </a>
+    <!-- EMP -->
+    <a class="album"
+       href="https://soundcloud.com/prince-marco-278939286/sets/emp"
+       target="_blank" rel="noopener">
+      <img src="cover/emp_cover.jpg" alt="EMP cover">
+      <span>EMP</span>
+    </a>
 
-</div>
-  </main>
+    <!-- TAPED -->
+    <a class="album"
+       href="https://soundcloud.com/marco-maria-638714703/sets/taped"
+       target="_blank" rel="noopener">
+      <img src="cover/taped_cover.jpg" alt="TAPED cover">
+      <span>TAPED</span>
+    </a>
 
-</body>
-</html>
+  </div>
+</main>
