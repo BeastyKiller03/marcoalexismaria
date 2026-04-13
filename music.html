@@ -23,7 +23,7 @@
     body { background-image: none !important; }
 
     /* ===== TOP BAR ===== */
-    .top-bar{
+    .top-bar {
       position: fixed;
       top: 0;
       left: 0;
@@ -37,26 +37,26 @@
       background: #faf9f6;
     }
 
-    .brand{
+    .brand {
       font-size: 11px;
       letter-spacing: 0.10em;
       text-transform: lowercase;
       white-space: nowrap;
     }
 
-    .brand a{
+    .brand a {
       text-decoration: none;
       color: inherit;
     }
 
-    .menu{
+    .menu {
       flex: 1;
       display: flex;
       justify-content: flex-end;
       min-width: 0;
     }
 
-    .menu .links{
+    .menu .links {
       display: flex;
       gap: 14px;
       white-space: nowrap;
@@ -65,9 +65,11 @@
       scrollbar-width: none;
     }
 
-    .menu .links::-webkit-scrollbar{ display: none; }
+    .menu .links::-webkit-scrollbar {
+      display: none;
+    }
 
-    .menu .links a{
+    .menu .links a {
       font-size: 11px;
       letter-spacing: 0.10em;
       text-transform: lowercase;
@@ -77,14 +79,14 @@
     }
 
     /* ===== MAIN ===== */
-    .music-wrapper{
+    .music-wrapper {
       min-height: 100vh;
       padding: calc(90px + env(safe-area-inset-top)) 16px 40px;
       display: flex;
       justify-content: center;
     }
 
-    .music-content{
+    .music-content {
       width: 100%;
       max-width: 980px;
       display: flex;
@@ -93,14 +95,14 @@
       gap: 42px;
     }
 
-    /* ===== FEATURED PLAYER ===== */
-    .featured-track{
+    /* ===== FEATURED TRACK ===== */
+    .featured-track {
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       text-align: center;
     }
 
-    .featured-track .track-title{
+    .featured-track .track-title {
       font-size: 12px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -108,13 +110,46 @@
       margin-bottom: 12px;
     }
 
-    .featured-track audio{
+    .featured-track iframe,
+    .featured-track audio {
       width: 100%;
       display: block;
     }
 
+    .stream-links {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: .72;
+    }
+
+    .stream-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .stream-links a:hover {
+      opacity: 1;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: .55;
+      margin-bottom: -12px;
+    }
+
     /* ===== ALBUM ROW ===== */
-    .album-row{
+    .album-row {
       width: 100%;
       display: flex;
       gap: 32px;
@@ -123,23 +158,23 @@
       flex-wrap: nowrap;
     }
 
-    .album{
+    .album {
       text-decoration: none;
       color: inherit;
       display: block;
       transition: transform .18s ease, opacity .18s ease;
     }
 
-    .album img{
+    .album img {
       width: 280px;
       height: 280px;
       object-fit: cover;
       border-radius: 16px;
-      box-shadow: 0 14px 28px rgba(0,0,0,0.14);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
       display: block;
     }
 
-    .album span{
+    .album span {
       display: block;
       margin-top: 12px;
       text-align: center;
@@ -149,42 +184,41 @@
       opacity: .75;
     }
 
-    .album:hover{
+    .album:hover {
       transform: translateY(-2px);
       opacity: .96;
     }
 
     /* ===== MOBILE ===== */
-    @media (max-width: 768px){
-
+    @media (max-width: 768px) {
       html, body {
         overflow-y: auto;
       }
 
-      .music-wrapper{
+      .music-wrapper {
         padding-top: calc(96px + env(safe-area-inset-top));
       }
 
-      .music-content{
+      .music-content {
         gap: 30px;
       }
 
-      .featured-track{
+      .featured-track {
         max-width: 100%;
       }
 
-      .album-row{
+      .album-row {
         flex-direction: column;
         gap: 28px;
         align-items: center;
       }
 
-      .album{
+      .album {
         width: 100%;
         max-width: 420px;
       }
 
-      .album img{
+      .album img {
         width: 100%;
         height: auto;
         aspect-ratio: 1 / 1;
@@ -217,20 +251,30 @@
   <main class="music-wrapper">
     <div class="music-content">
 
-      <!-- FEATURED TRACK -->
-<section class="featured-track">
-  <div class="track-title">LATEST SINGLE</div>
+      <!-- FEATURED RELEASE -->
+      <section class="featured-track">
+        <div class="track-title">Latest Single</div>
 
-  <iframe style="border-radius:12px"
-    src="https://open.spotify.com/embed/track/1ojROTjMWMjGRoa7IccjpZ?utm_source=generator"
-    width="100%" height="152" frameBorder="0"
-    allowfullscreen=""
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-    loading="lazy">
-  </iframe>
-</section>
+        <iframe
+          style="border-radius:12px"
+          src="https://open.spotify.com/embed/track/1ojROTjMWMjGRoa7IccjpZ?utm_source=generator"
+          width="100%"
+          height="152"
+          frameborder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
 
-      <!-- FEATURED TRACK -->
+        <div class="stream-links">
+          <a href="https://open.spotify.com/track/1ojROTjMWMjGRoa7IccjpZ?si=fe4fe847b0c04e61" target="_blank" rel="noopener">Spotify</a>
+          <span>•</span>
+          <a href="https://music.apple.com/us/album/wishin/1888956369?i=1888956370" target="_blank" rel="noopener">Apple Music</a>
+        </div>
+      </section>
+
+      <!-- SECONDARY PLAYER -->
+      <div class="section-label"></div>
       <section class="featured-track">
         <div class="track-title">sins not tragedies (rmx)</div>
         <audio controls>
